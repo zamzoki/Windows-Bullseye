@@ -81,7 +81,7 @@ namespace BullseyeCursors
         }
 
         
-        private void xCursorTimer_Tick(object sender, EventArgs e)
+        private void XCursorTimer_Tick(object sender, EventArgs e)
         {
             xCursorGfx.Clear(Color.LightGray);
 
@@ -112,7 +112,7 @@ namespace BullseyeCursors
         }
 
 
-        private void yCursorTimer_Tick(object sender, EventArgs e)
+        private void YCursorTimer_Tick(object sender, EventArgs e)
         {
             yCursorGfx.Clear(Color.LightGray);
 
@@ -288,7 +288,7 @@ namespace BullseyeCursors
         }
         
 
-        private void timer_Tick(object sender, EventArgs e)
+        private void Timer_Tick(object sender, EventArgs e)
         {
             if (greenFlag == true)
             {

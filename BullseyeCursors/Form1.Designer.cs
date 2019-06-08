@@ -86,7 +86,7 @@
             // timer1
             // 
             this.timer.Interval = 500;
-            this.timer.Tick += new System.EventHandler(this.timer_Tick);
+            this.timer.Tick += new System.EventHandler(this.Timer_Tick);
             // 
             // xCursorPictureBox
             // 
@@ -99,12 +99,12 @@
             // timerx
             // 
             this.xCursorTimer.Interval = 2;
-            this.xCursorTimer.Tick += new System.EventHandler(this.xCursorTimer_Tick);
+            this.xCursorTimer.Tick += new System.EventHandler(this.XCursorTimer_Tick);
             // 
             // timery
             // 
             this.yCursorTimer.Interval = 2;
-            this.yCursorTimer.Tick += new System.EventHandler(this.yCursorTimer_Tick);
+            this.yCursorTimer.Tick += new System.EventHandler(this.YCursorTimer_Tick);
             // 
             // yCursorPictureBox
             // 
