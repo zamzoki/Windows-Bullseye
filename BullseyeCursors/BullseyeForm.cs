@@ -4,9 +4,9 @@ using System.Windows.Forms;
 
 namespace BullseyeCursors
 {
-    public partial class Form1 : Form
+    public partial class BullseyeForm : Form
     {
-        public Form1()
+        public BullseyeForm()
         {
             InitializeComponent();
         }
