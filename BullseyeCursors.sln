@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.28010.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BullseyeCursors", "BullseyeCursors\BullseyeCursors.csproj", "{EBCBB068-2F42-43D0-AF48-378BFCF955CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BullseyeCursorTests", "BullseyeCursorTests\BullseyeCursorTests.csproj", "{BF47071A-0A48-47E8-89E5-625ADE3DF154}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
