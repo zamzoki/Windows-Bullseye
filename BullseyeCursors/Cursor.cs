@@ -10,7 +10,7 @@ namespace BullseyeCursors
         
         private readonly int width;
         private readonly int height;
-        private readonly bool horizontal;
+        private readonly bool isHorizontal;
         private readonly Bitmap bitmap;
         private readonly Graphics cursorGraphics;
 
@@ -23,12 +23,12 @@ namespace BullseyeCursors
             
             this.width = widthArg;
             this.height = heightArg;
-            this.horizontal = widthArg >= heightArg;
+            this.isHorizontal = widthArg >= heightArg;
             this.bitmap = new Bitmap(widthArg, heightArg);
             this.cursorGraphics = Graphics.FromImage(bitmap);
         }
         
-        private int Length => this.horizontal ? this.width : this.height;
+        private int Length => this.isHorizontal ? this.width : this.height;
 
         public Bitmap Bitmap => bitmap;
 
@@ -61,7 +61,7 @@ namespace BullseyeCursors
 
         private void HandleDrawingCursor()
         {
-            if (horizontal)
+            if (isHorizontal)
             {
                 DrawCursorForHorizontalSlider();
             }
