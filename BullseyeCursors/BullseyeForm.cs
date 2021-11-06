@@ -77,11 +77,23 @@ namespace BullseyeCursors
             xCursorTimer.Start();
         }
 
+        private void StopXTimer()
+        {
+            xCursorTimer.Stop();
+            xCursorTimer.Enabled = false;
+        }
+
         private void StartYTimer()
         {
             yCursorTimer.Interval = 1;
             yCursorTimer.Enabled = true;
             yCursorTimer.Start();
+        }
+        
+        private void StopYTimer()
+        {
+            yCursorTimer.Stop();
+            yCursorTimer.Enabled = false;
         }
 
         private void XCursorTimer_Tick(object sender, EventArgs e)
@@ -114,8 +126,7 @@ namespace BullseyeCursors
 
                 if(attempts > 0 && spaceKeyPressedCounter == 1)
                 {
-                    xCursorTimer.Stop();
-                    xCursorTimer.Enabled = false;
+                    StopXTimer();
                     if (xCursor.Coordinate - xCursor.PreviousCoordinate >= 0)
                         xCoordinate = xCursor.Coordinate - 7;
                     else if (xCursor.Coordinate - xCursor.PreviousCoordinate < 0)
@@ -127,8 +138,7 @@ namespace BullseyeCursors
 
                 if (attempts > 0 && spaceKeyPressedCounter == 2)
                 {
-                    yCursorTimer.Stop();
-                    yCursorTimer.Enabled = false;
+                    StopYTimer();
                     if (yCursor.Coordinate - yCursor.PreviousCoordinate >= 0)
                         yCoordinate = yCursor.Coordinate - 7;
                     else if (yCursor.Coordinate - yCursor.PreviousCoordinate < 0)
@@ -194,6 +204,7 @@ namespace BullseyeCursors
 
         private void HandleRetry()
         {
+            StopYTimer();
             ResetValuesAndLabelsForPointsAndAttempts();
             DrawNewImages();
             spaceKeyPressedCounter = 0;
