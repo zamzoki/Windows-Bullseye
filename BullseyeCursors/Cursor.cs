@@ -15,7 +15,7 @@ namespace BullseyeCursors
         private readonly Graphics cursorGraphics;
 
         private int coordinate;
-        private int previousCoordinate = -10;
+        private int previousCoordinate = -10; // TODO check if initial value is needed;
 
         public Cursor(int widthArg, int heightArg)
         {
@@ -71,20 +71,20 @@ namespace BullseyeCursors
         {
             if (this.isHorizontal)
             {
-                this.DrawCursorForHorizontalSlider();
+                this.DrawCursorForHorizontalTrack();
             }
             else
             {
-                this.DrawCursorForVerticalSlider();
+                this.DrawCursorForVerticalTrack();
             }
         }
 
-        private void DrawCursorForHorizontalSlider()
+        private void DrawCursorForHorizontalTrack()
         {
             this.cursorGraphics.FillRectangle(new SolidBrush(Color.LightSeaGreen), this.coordinate, 0, CursorThickness, this.height);
         }
 
-        private void DrawCursorForVerticalSlider()
+        private void DrawCursorForVerticalTrack()
         {
             this.cursorGraphics.FillRectangle(new SolidBrush(Color.LightSeaGreen), 0, this.coordinate, this.width, CursorThickness);
         }
