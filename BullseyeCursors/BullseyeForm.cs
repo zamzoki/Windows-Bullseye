@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using BullseyeCursors.Models;
+using Cursor = BullseyeCursors.Models.Cursor;
 
 namespace BullseyeCursors
 {

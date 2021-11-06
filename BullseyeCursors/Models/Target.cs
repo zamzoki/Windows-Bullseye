@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace BullseyeCursors
+namespace BullseyeCursors.Models
 {
     public class Target
     {

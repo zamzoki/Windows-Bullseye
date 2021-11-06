@@ -55,12 +55,12 @@
     <Compile Include="BullseyeForm.Designer.cs">
       <DependentUpon>BullseyeForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Cursor.cs" />
-    <Compile Include="Target.cs" />
+    <Compile Include="Models\Cursor.cs" />
+    <Compile Include="Models\Target.cs" />
+    <Compile Include="Models\TimerWrapper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringResources.cs" />
-    <Compile Include="TimerWrapper.cs" />
     <EmbeddedResource Include="BullseyeForm.resx">
       <DependentUpon>BullseyeForm.cs</DependentUpon>
     </EmbeddedResource>

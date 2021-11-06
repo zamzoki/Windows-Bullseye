@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace BullseyeCursors
+namespace BullseyeCursors.Models
 {
     public class TimerWrapper
     {
