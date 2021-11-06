@@ -11,6 +11,7 @@ namespace BullseyeCursors
         private readonly Target target;
         private readonly Cursor xCursor;
         private readonly Cursor yCursor;
+        private readonly AttemptsManager attemptsManager;
         
         private TimerWrapper xTimer;
         private TimerWrapper yTimer;
@@ -20,12 +21,12 @@ namespace BullseyeCursors
             target = new Target();
             xCursor = new Cursor(400, 10);
             yCursor = new Cursor(10, 400);
+            attemptsManager = new AttemptsManager(5);
             InitializeComponent();
         }
 
         private int points;
-        private int attempts = 5;
-            
+
         private const double CenterX = 200;
         private const double CenterY = 200;
         
@@ -82,7 +83,7 @@ namespace BullseyeCursors
             {
                 ++spaceKeyPressedCounter;
 
-                if(attempts > 0 && spaceKeyPressedCounter == 1)
+                if(attemptsManager.Count > 0 && spaceKeyPressedCounter == 1)
                 {
                     xTimer.Stop();
                     
@@ -99,7 +100,7 @@ namespace BullseyeCursors
                     yTimer.Start();
                 }
 
-                if (attempts > 0 && spaceKeyPressedCounter == 2)
+                if (attemptsManager.Count > 0 && spaceKeyPressedCounter == 2)
                 {
                     yTimer.Stop();
                     if (yCursor.Coordinate - yCursor.PreviousCoordinate >= 0)
@@ -157,7 +158,7 @@ namespace BullseyeCursors
                     }
                     
                     pointsLabel.Text = StringResources.GetPointsWithPointsToAddText(points, pointsToAdd);
-                    attemptsLabel.Text = StringResources.GetAttemptsWithMinusOneText(attempts);
+                    attemptsLabel.Text = StringResources.GetAttemptsWithMinusOneText(attemptsManager.Count);
                     spaceKeyPressedCounter = 0;
                 }
             }
@@ -182,8 +183,8 @@ namespace BullseyeCursors
             points = 0;
             pointsLabel.Text = StringResources.GetPointsText(points);
 
-            attempts = 5;
-            attemptsLabel.Text = StringResources.GetAttemptsText(attempts);
+            attemptsManager.Reset();
+            attemptsLabel.Text = StringResources.GetAttemptsText(attemptsManager.Count);
         }
 
         /// <summary>
@@ -234,15 +235,15 @@ namespace BullseyeCursors
             
             // TODO a labels manager should observe attempts and points values and trigger a labels update when attempts or points change
             // TODO Check out observer pattern
-            --attempts;
+            attemptsManager.Decrement();
             pointsLabel.Text = StringResources.GetPointsText(points);
-            attemptsLabel.Text = StringResources.GetAttemptsText(attempts);
+            attemptsLabel.Text = StringResources.GetAttemptsText(attemptsManager.Count);
             
             timer.Stop();
             timer.Enabled = false;
 
 
-            if(attempts > 0)
+            if(attemptsManager.Count > 0)
             {
                 spaceKeyPressedCounter = 0;
                 DrawNewCursors();
@@ -268,7 +269,7 @@ namespace BullseyeCursors
             attemptsLabel.Location = new Point(50, 0);
             attemptsLabel.Size = new Size(100, 50);
             attemptsLabel.AutoSize = true;
-            attemptsLabel.Text = StringResources.GetAttemptsText(attempts);
+            attemptsLabel.Text = StringResources.GetAttemptsText(attemptsManager.Count);
         }
 
         private void InitializePointsLabel()

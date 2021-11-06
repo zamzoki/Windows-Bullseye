@@ -57,6 +57,7 @@
     </Compile>
     <Compile Include="Interfaces\IObserver.cs" />
     <Compile Include="Interfaces\ISubject.cs" />
+    <Compile Include="Models\AttemptsManager.cs" />
     <Compile Include="Models\Cursor.cs" />
     <Compile Include="Models\Target.cs" />
     <Compile Include="Models\TimerWrapper.cs" />

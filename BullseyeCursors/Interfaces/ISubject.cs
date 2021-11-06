@@ -2,7 +2,7 @@
 {
     public interface ISubject
     {
-        void Attach(IObserver observer);
+        void Attach(IObserver observerArg);
 
         void Notify();
     }
