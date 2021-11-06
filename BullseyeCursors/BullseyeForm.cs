@@ -6,6 +6,13 @@ namespace BullseyeCursors
 {
     public partial class BullseyeForm : Form
     {
+        private readonly Target target;
+        private readonly Cursor xCursor;
+        private readonly Cursor yCursor;
+        
+        private TimerWrapper xTimer;
+        private TimerWrapper yTimer;
+        
         public BullseyeForm()
         {
             target = new Target();
@@ -14,10 +21,6 @@ namespace BullseyeCursors
             InitializeComponent();
         }
 
-        private readonly Target target;
-        private readonly Cursor xCursor;
-        private readonly Cursor yCursor;
-        
         private int points;
         private int attempts = 5;
             
@@ -43,9 +46,16 @@ namespace BullseyeCursors
         /// <param name="e"></param>
         private void Form1_Load(object sender, EventArgs e)
         {
+            InitializeTimers();
             InitializeLabels();
             DrawNewImages();
-            StartXTimer();
+            xTimer.Start();
+        }
+
+        private void InitializeTimers()
+        {
+            xTimer = new TimerWrapper(xCursorTimer);
+            yTimer = new TimerWrapper(yCursorTimer);
         }
 
         /// <summary>
@@ -68,32 +78,6 @@ namespace BullseyeCursors
         {
             xCursorPictureBox.Image = xCursor.DrawNew();
             yCursorPictureBox.Image = yCursor.DrawNew();
-        }
-
-        private void StartXTimer()
-        {
-            xCursorTimer.Interval = 1;
-            xCursorTimer.Enabled = true;
-            xCursorTimer.Start();
-        }
-
-        private void StopXTimer()
-        {
-            xCursorTimer.Stop();
-            xCursorTimer.Enabled = false;
-        }
-
-        private void StartYTimer()
-        {
-            yCursorTimer.Interval = 1;
-            yCursorTimer.Enabled = true;
-            yCursorTimer.Start();
-        }
-        
-        private void StopYTimer()
-        {
-            yCursorTimer.Stop();
-            yCursorTimer.Enabled = false;
         }
 
         private void XCursorTimer_Tick(object sender, EventArgs e)
@@ -126,19 +110,24 @@ namespace BullseyeCursors
 
                 if(attempts > 0 && spaceKeyPressedCounter == 1)
                 {
-                    StopXTimer();
+                    xTimer.Stop();
+                    
                     if (xCursor.Coordinate - xCursor.PreviousCoordinate >= 0)
+                    {
                         xCoordinate = xCursor.Coordinate - 7;
+                    }
                     else if (xCursor.Coordinate - xCursor.PreviousCoordinate < 0)
+                    {
                         xCoordinate = xCursor.Coordinate + 14;
+                    }
                     xCursorPictureBox.Image = xCursor.Bitmap;
 
-                    StartYTimer();
+                    yTimer.Start();
                 }
 
                 if (attempts > 0 && spaceKeyPressedCounter == 2)
                 {
-                    StopYTimer();
+                    yTimer.Stop();
                     if (yCursor.Coordinate - yCursor.PreviousCoordinate >= 0)
                         yCoordinate = yCursor.Coordinate - 7;
                     else if (yCursor.Coordinate - yCursor.PreviousCoordinate < 0)
@@ -204,11 +193,11 @@ namespace BullseyeCursors
 
         private void HandleRetry()
         {
-            StopYTimer();
+            yTimer.Stop();
             ResetValuesAndLabelsForPointsAndAttempts();
             DrawNewImages();
             spaceKeyPressedCounter = 0;
-            StartXTimer();
+            xTimer.Start();
         }
         
         private void ResetValuesAndLabelsForPointsAndAttempts()
@@ -279,7 +268,7 @@ namespace BullseyeCursors
             {
                 spaceKeyPressedCounter = 0;
                 DrawNewCursors();
-                StartXTimer();
+                xTimer.Start();
             }
         }
         
