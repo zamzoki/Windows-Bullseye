@@ -70,8 +70,13 @@ namespace BullseyeCursors
 
         private void DrawNewImages()
         {
-            targetPictureBox.Image = target.DrawNew();
+            DrawNewTarget();
             DrawNewCursors();
+        }
+
+        private void DrawNewTarget()
+        {
+            targetPictureBox.Image = target.DrawNew();
         }
 
         private void DrawNewCursors()
