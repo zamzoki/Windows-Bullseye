@@ -96,25 +96,15 @@ namespace BullseyeCursors
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            // ESCAPE
+            // TODO use switch statement
             if ((Keys)e.KeyValue == Keys.Escape)
             {
-                this.Close();
+                HandleClose();
             }
             
-            // RETRY
             if ((Keys)e.KeyValue == Keys.R)
             {
-                DrawNewImages();
-
-                points = 0;
-                pointsLabel.Text = StringResources.GetPointsText(points);
-
-                attempts = 5;
-                attemptsLabel.Text = StringResources.GetAttemptsText(attempts);
-
-                spaceKeyPressedCounter = 0;
-                StartXTimer();
+                HandleRetry();
             }
 
             // SPACE
@@ -198,6 +188,26 @@ namespace BullseyeCursors
                     spaceKeyPressedCounter = 0;
                 }
             }
+        }
+
+        private void HandleClose() => this.Close();
+
+        private void HandleRetry()
+        {
+            ResetValuesAndLabelsForPointsAndAttempts();
+            DrawNewImages();
+            spaceKeyPressedCounter = 0;
+            StartXTimer();
+        }
+        
+        private void ResetValuesAndLabelsForPointsAndAttempts()
+        {
+            // TODO extract in a manager responsible with points and attempts
+            points = 0;
+            pointsLabel.Text = StringResources.GetPointsText(points);
+
+            attempts = 5;
+            attemptsLabel.Text = StringResources.GetAttemptsText(attempts);
         }
 
         /// <summary>
