@@ -52,39 +52,6 @@ namespace BullseyeCursors
             xTimer.Start();
         }
 
-        private void InitializeTimers()
-        {
-            xTimer = new TimerWrapper(xCursorTimer);
-            yTimer = new TimerWrapper(yCursorTimer);
-        }
-
-        /// <summary>
-        /// Deals with the design of the labels.
-        /// </summary>
-        private void InitializeLabels()
-        {
-            InitializeAttemptsLabel();
-            InitializePointsLabel();
-            InitializeInstructionsLabel();
-        }
-
-        private void DrawNewImages()
-        {
-            DrawNewTarget();
-            DrawNewCursors();
-        }
-
-        private void DrawNewTarget()
-        {
-            targetPictureBox.Image = target.DrawNew();
-        }
-
-        private void DrawNewCursors()
-        {
-            xCursorPictureBox.Image = xCursor.DrawNew();
-            yCursorPictureBox.Image = yCursor.DrawNew();
-        }
-
         private void XCursorTimer_Tick(object sender, EventArgs e)
         {
             xCursorPictureBox.Image = xCursor.DrawOnTickAndUpdateCoordinateValue();
@@ -208,6 +175,7 @@ namespace BullseyeCursors
         private void ResetValuesAndLabelsForPointsAndAttempts()
         {
             // TODO extract in a manager responsible with points and attempts
+            // TODO labels should update automatically when points/ attempts values change
             points = 0;
             pointsLabel.Text = StringResources.GetPointsText(points);
 
@@ -278,6 +246,19 @@ namespace BullseyeCursors
                 xTimer.Start();
             }
         }
+
+        private void InitializeTimers()
+        {
+            xTimer = new TimerWrapper(xCursorTimer);
+            yTimer = new TimerWrapper(yCursorTimer);
+        }
+        
+        private void InitializeLabels()
+        {
+            InitializeAttemptsLabel();
+            InitializePointsLabel();
+            InitializeInstructionsLabel();
+        }
         
         private void InitializeAttemptsLabel()
         {
@@ -299,6 +280,23 @@ namespace BullseyeCursors
         {
             InstructionsLabel.AutoSize = true;
             InstructionsLabel.Text = StringResources.GetInstructions();
+        }
+
+        private void DrawNewImages()
+        {
+            DrawNewTarget();
+            DrawNewCursors();
+        }
+
+        private void DrawNewTarget()
+        {
+            targetPictureBox.Image = target.DrawNew();
+        }
+
+        private void DrawNewCursors()
+        {
+            xCursorPictureBox.Image = xCursor.DrawNew();
+            yCursorPictureBox.Image = yCursor.DrawNew();
         }
     }
 }
