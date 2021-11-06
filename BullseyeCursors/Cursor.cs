@@ -30,82 +30,90 @@ namespace BullseyeCursors
         
         private int Length => this.isHorizontal ? this.width : this.height;
 
-        public Bitmap Bitmap => bitmap;
+        public Bitmap Bitmap => this.bitmap;
 
-        public int Coordinate => coordinate;
+        public int Coordinate => this.coordinate;
 
-        public int PreviousCoordinate
-        {
-            get => previousCoordinate;
-            set => previousCoordinate = value;
-        }
+        public int PreviousCoordinate => this.previousCoordinate;
 
         public Bitmap DrawNew()
         {
-            cursorGraphics.Clear(Color.LightGray);
-            return bitmap;
+            this.ResetCoordinate();
+            this.DrawElements();
+            return this.bitmap;
         }
 
         public Bitmap DrawOnTickAndUpdateCoordinateValue()
         {
-            cursorGraphics.Clear(Color.LightGray);
-            HandleDrawingCursor();
+            this.DrawElements();
             this.UpdateCoordinateOnTick();
-            return bitmap;
+            return this.bitmap;
         }
 
         public void ResetCoordinate()
         {
             this.coordinate = 0;
+            this.previousCoordinate = -1;
         }
 
-        private void HandleDrawingCursor()
+        private void DrawElements()
         {
-            if (isHorizontal)
+            this.DrawTrack();
+            this.DrawCursor();
+        }
+
+        private void DrawTrack()
+        {
+            this.cursorGraphics.Clear(Color.LightGray);
+        }
+
+        private void DrawCursor()
+        {
+            if (this.isHorizontal)
             {
-                DrawCursorForHorizontalSlider();
+                this.DrawCursorForHorizontalSlider();
             }
             else
             {
-                DrawCursorForVerticalSlider();
+                this.DrawCursorForVerticalSlider();
             }
         }
 
         private void DrawCursorForHorizontalSlider()
         {
-            cursorGraphics.FillRectangle(new SolidBrush(Color.LightSeaGreen), this.coordinate, 0, CursorThickness, this.height);
+            this.cursorGraphics.FillRectangle(new SolidBrush(Color.LightSeaGreen), this.coordinate, 0, CursorThickness, this.height);
         }
 
         private void DrawCursorForVerticalSlider()
         {
-            cursorGraphics.FillRectangle(new SolidBrush(Color.LightSeaGreen), 0, this.coordinate, this.width, CursorThickness);
+            this.cursorGraphics.FillRectangle(new SolidBrush(Color.LightSeaGreen), 0, this.coordinate, this.width, CursorThickness);
         }
 
         private void UpdateCoordinateOnTick()
         {
-            var delta = coordinate - previousCoordinate;
+            var delta = this.coordinate - this.previousCoordinate;
             if (delta == 0)
             {
                 throw new Exception($"\"{nameof(delta)}\" cannot be zero.");
             }
             
-            previousCoordinate = coordinate;
-            if (IsAtStart() || IsBetweenStartAndEnd() && IsSlidingToTheRight(delta))
+            this.previousCoordinate = this.coordinate;
+            if (this.IsAtStart() || this.IsBetweenStartAndEnd() && this.IsSlidingToTheRight(delta))
             {
-                coordinate += TickStep;
+                this.coordinate += TickStep;
             }
-            else if (IsAtEnd() || IsBetweenStartAndEnd() && IsSlidingToTheLeft(delta))
+            else if (this.IsAtEnd() || this.IsBetweenStartAndEnd() && this.IsSlidingToTheLeft(delta))
             {
-                coordinate -= TickStep;
+                this.coordinate -= TickStep;
             }
 
         }
 
-        private bool IsAtStart() => coordinate == 0;
+        private bool IsAtStart() => this.coordinate == 0;
 
-        private bool IsAtEnd() => coordinate == this.Length - TickStep;
+        private bool IsAtEnd() => this.coordinate == this.Length - TickStep;
 
-        private bool IsBetweenStartAndEnd() => coordinate > 0 && coordinate < this.Length - TickStep;
+        private bool IsBetweenStartAndEnd() => this.coordinate > 0 && this.coordinate < this.Length - TickStep;
 
         private bool IsSlidingToTheRight(int delta) => delta > 0;
 

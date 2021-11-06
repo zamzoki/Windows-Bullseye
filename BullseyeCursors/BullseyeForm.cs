@@ -45,11 +45,7 @@ namespace BullseyeCursors
         {
             InitializeLabels();
             DrawNewImages();
-
-            // Gets the X cursor moving.
-            xCursorTimer.Interval = 1;
-            xCursorTimer.Enabled = true;
-            xCursorTimer.Start();
+            StartXTimer();
         }
 
         /// <summary>
@@ -65,8 +61,27 @@ namespace BullseyeCursors
         private void DrawNewImages()
         {
             targetPictureBox.Image = target.DrawNew();
+            DrawNewCursors();
+        }
+
+        private void DrawNewCursors()
+        {
             xCursorPictureBox.Image = xCursor.DrawNew();
             yCursorPictureBox.Image = yCursor.DrawNew();
+        }
+
+        private void StartXTimer()
+        {
+            xCursorTimer.Interval = 1;
+            xCursorTimer.Enabled = true;
+            xCursorTimer.Start();
+        }
+
+        private void StartYTimer()
+        {
+            yCursorTimer.Interval = 1;
+            yCursorTimer.Enabled = true;
+            yCursorTimer.Start();
         }
 
         private void XCursorTimer_Tick(object sender, EventArgs e)
@@ -90,7 +105,7 @@ namespace BullseyeCursors
             // RETRY
             if ((Keys)e.KeyValue == Keys.R)
             {
-                targetPictureBox.Image = target.DrawNew();
+                DrawNewImages();
 
                 points = 0;
                 pointsLabel.Text = StringResources.GetPointsText(points);
@@ -99,14 +114,7 @@ namespace BullseyeCursors
                 attemptsLabel.Text = StringResources.GetAttemptsText(attempts);
 
                 spaceKeyPressedCounter = 0;
-                xCursorTimer.Enabled = true;
-                xCursorTimer.Start();
-                xCursor.ResetCoordinate();
-                xCursor.PreviousCoordinate = -1;
-
-                yCursor.ResetCoordinate();
-                yCursor.PreviousCoordinate = -1;
-                // yTemp = -1;
+                StartXTimer();
             }
 
             // SPACE
@@ -124,9 +132,7 @@ namespace BullseyeCursors
                         xCoordinate = xCursor.Coordinate + 14;
                     xCursorPictureBox.Image = xCursor.Bitmap;
 
-                    yCursorTimer.Interval = 1;
-                    yCursorTimer.Enabled = true;
-                    yCursorTimer.Start(); 
+                    StartYTimer();
                 }
 
                 if (attempts > 0 && spaceKeyPressedCounter == 2)
@@ -149,7 +155,7 @@ namespace BullseyeCursors
                     {
                         pointsToAdd = 100;
                         greenFlag = true;
-                        DrawTargetHole();
+                        DrawHoleInTarget();
                     }
 
                     // Yellow area 50p
@@ -158,7 +164,7 @@ namespace BullseyeCursors
                     {
                         pointsToAdd = 50;
                         yellowFlag = true;
-                        DrawTargetHole();
+                        DrawHoleInTarget();
                     }
 
                     // Red area 25p
@@ -167,7 +173,7 @@ namespace BullseyeCursors
                     {
                         pointsToAdd = 25;
                         redFlag = true;
-                        DrawTargetHole();
+                        DrawHoleInTarget();
                     }
 
                     // Blue area 10p
@@ -176,7 +182,7 @@ namespace BullseyeCursors
                     {
                         pointsToAdd = 10;
                         blueFlag = true;
-                        DrawTargetHole();
+                        DrawHoleInTarget();
                     }
 
                     // Black area 0p
@@ -184,7 +190,7 @@ namespace BullseyeCursors
                         (Math.Sqrt(Math.Pow(xCoordinate - CenterX, 2f) + Math.Pow(yCoordinate - CenterY, 2f)) < 200))
                     {
                         blackFlag = true;
-                        DrawTargetHole();
+                        DrawHoleInTarget();
                     }
                     
                     pointsLabel.Text = StringResources.GetPointsWithPointsToAddText(points, pointsToAdd);
@@ -197,7 +203,7 @@ namespace BullseyeCursors
         /// <summary>
         /// Draws a hole at the of (x, y) coordinates.
         /// </summary>
-        private void DrawTargetHole()
+        private void DrawHoleInTarget()
         {
             targetPictureBox.Image = target.DrawHoleAt(xCoordinate, yCoordinate);
         }
@@ -251,13 +257,8 @@ namespace BullseyeCursors
             if(attempts > 0)
             {
                 spaceKeyPressedCounter = 0;
-                xCursorTimer.Enabled = true;
-                xCursorTimer.Start();
-                xCursor.ResetCoordinate();
-                xCursor.PreviousCoordinate = -1;
-
-                yCursor.ResetCoordinate();
-                yCursor.PreviousCoordinate = -1;
+                DrawNewCursors();
+                StartXTimer();
             }
         }
         
