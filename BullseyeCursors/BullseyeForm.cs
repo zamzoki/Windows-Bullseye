@@ -44,7 +44,7 @@ namespace BullseyeCursors
         private void Form1_Load(object sender, EventArgs e)
         {
             InitializeLabels();
-            DrawImages();
+            DrawNewImages();
 
             // Gets the X cursor moving.
             xCursorTimer.Interval = 1;
@@ -62,7 +62,7 @@ namespace BullseyeCursors
             InitializeInstructionsLabel();
         }
 
-        private void DrawImages()
+        private void DrawNewImages()
         {
             targetPictureBox.Image = target.DrawNew();
             xCursorPictureBox.Image = xCursor.DrawNew();
