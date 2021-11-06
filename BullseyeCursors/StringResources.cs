@@ -1,28 +1,30 @@
-﻿
-internal static class StringResources
+﻿namespace  BullseyeCursors
 {
-    private const string ShootInstruction = "Press [Space] to shoot.";
+    internal static class StringResources
+    {
+        private const string ShootInstruction = "Press [Space] to shoot.";
 
-    private const string RetryInstruction = "Press [R] to retry.";
-    
-    private const string ExitInstruction = "Press [Esc] to exit.";
-    
-    private const string AttemptsLabel = "Attempts: ";
+        private const string RetryInstruction = "Press [R] to retry.";
 
-    private const string PointsLabel = "Points";
+        private const string ExitInstruction = "Press [Esc] to exit.";
 
-    public static string GetInstructions()
-        => $"{ShootInstruction}\n{RetryInstruction}\n{ExitInstruction}";
+        private const string AttemptsLabel = "Attempts: ";
 
-    public static string GetPointsText(int noOfPoints)
-        => $"{PointsLabel}: {noOfPoints}";
-    
-    public static string GetPointsWithPointsToAddText(int noOfPoints, int noOfPointsToAdd)
-        => $"{PointsLabel}: {noOfPoints}+{noOfPointsToAdd}"; 
+        private const string PointsLabel = "Points";
 
-    public static string GetAttemptsText(int noOfAttempts)
-        => $"{AttemptsLabel}: {noOfAttempts}";
+        public static string GetInstructions()
+            => $"{ShootInstruction}\n{RetryInstruction}\n{ExitInstruction}";
 
-    public static string GetAttemptsWithMinusOneText(int noOfAttempts)
-        => $"{AttemptsLabel}: {noOfAttempts}-1";
+        public static string GetPointsText(int noOfPoints)
+            => $"{PointsLabel}: {noOfPoints}";
+
+        public static string GetPointsWithPointsToAddText(int noOfPoints, int noOfPointsToAdd)
+            => $"{PointsLabel}: {noOfPoints}+{noOfPointsToAdd}";
+
+        public static string GetAttemptsText(int noOfAttempts)
+            => $"{AttemptsLabel}: {noOfAttempts}";
+
+        public static string GetAttemptsWithMinusOneText(int noOfAttempts)
+            => $"{AttemptsLabel}: {noOfAttempts}-1";
+    }
 }
