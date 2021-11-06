@@ -8,179 +8,16 @@ namespace BullseyeCursors
     {
         public BullseyeForm()
         {
+            target = new Target();
+            xCursor = new Cursor(400, 10);
+            yCursor = new Cursor(10, 400);
             InitializeComponent();
         }
 
-        // Target variables
-        private static Bitmap _targetBitmap;
-        private Graphics targetGraphics;
-
-        // x cursor variables
-        private static Bitmap _xCursorBitmap;
-        private Graphics xCursorGraphics;
-        private int xCursorCoordinate, xTemp = -10;
-
-        // y cursor variables
-        private static Bitmap _yCursorBitmap;
-        private Graphics yCursorGraphics;
-        private int yCursorCoordinate, yTemp = -10;
-
-        /// <summary>
-        /// This method sets up the UI and visual elements of the application.
-        /// Whenever the form is loaded, all the visual elements will be displayed.
-        /// Also, the cursor on x is moving when the application is launched.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            SetUpLabels();
-            DrawTarget();
-            DrawXCursor();
-            DrawYCursor();
-
-            // Gets the X cursor moving.
-            xCursorTimer.Interval = 1;
-            xCursorTimer.Enabled = true;
-            xCursorTimer.Start();
-        }
-
-        /// <summary>
-        /// Deals with the design of the labels.
-        /// </summary>
-        private void SetUpLabels()
-        {
-            //Attempts label
-            attemptsLabel.Location = new Point(50, 0);
-            attemptsLabel.Size = new Size(100, 50);
-            attemptsLabel.AutoSize = true;
-            attemptsLabel.Text = StringResources.GetAttemptsText(attempts);
-
-            //Points label
-            pointsLabel.Location = new Point(250, 0);
-            pointsLabel.Size = new Size(100, 50);
-            pointsLabel.AutoSize = true;
-            pointsLabel.Text = StringResources.GetPointsText(points);
-
-            // Instructions label
-            InstructionsLabel.AutoSize = true;
-            InstructionsLabel.Text = StringResources.GetInstructions();
-        }
-
-        /// <summary>
-        /// Draws the bullseye target as a bitmap image.
-        /// </summary>
-        private void DrawTarget()
-        {
-            
-            _targetBitmap = new Bitmap(400, 400);
-            targetGraphics = Graphics.FromImage(_targetBitmap);
-            targetGraphics.FillEllipse(new SolidBrush(Color.DarkSlateGray), 0, 0, 400, 400);
-            targetGraphics.FillEllipse(new SolidBrush(Color.DarkBlue), 50, 50, 300, 300);
-            targetGraphics.FillEllipse(new SolidBrush(Color.Crimson), 100, 100, 200, 200);
-            targetGraphics.FillEllipse(new SolidBrush(Color.Goldenrod), 150, 150, 100, 100);
-            targetGraphics.FillEllipse(new SolidBrush(Color.ForestGreen), 190, 190, 20, 20);
-            targetPictureBox.Image = _targetBitmap;
-        }
-
-        /// <summary>
-        /// Draws the x cursor and the line along which it's moving.
-        /// </summary>
-        private void DrawXCursor()
-        {
-            // x cursor graphics
-            _xCursorBitmap = new Bitmap(400, 10);
-            xCursorGraphics = Graphics.FromImage(_xCursorBitmap);
-            xCursorGraphics.Clear(Color.LightGray);
-            xCursorPictureBox.Image = _xCursorBitmap;
-        }
-
-        /// <summary>
-        /// Draws the y cursors and the line along which it's moving.
-        /// </summary>
-        private void DrawYCursor()
-        {
-            // y cursor graphics
-            _yCursorBitmap = new Bitmap(10, 400);
-            yCursorGraphics = Graphics.FromImage(_yCursorBitmap);
-            yCursorGraphics.Clear(Color.LightGray);
-            yCursorPictureBox.Image = _yCursorBitmap;
-        }
-
+        private readonly Target target;
+        private readonly Cursor xCursor;
+        private readonly Cursor yCursor;
         
-
-        private void XCursorTimer_Tick(object sender, EventArgs e)
-        {
-            xCursorGraphics.Clear(Color.LightGray);
-            XCursorMovement();
-            xCursorPictureBox.Image = _xCursorBitmap;
-        }
-
-        /// <summary>
-        /// Dictates the way x cursor is moving.
-        /// </summary>
-        private void XCursorMovement()
-        {
-            if (xCursorCoordinate >= 0 && xCursorCoordinate <= 390 && xCursorCoordinate - xTemp > 0)
-            {
-                xCursorGraphics.FillRectangle(new SolidBrush(Color.LightSeaGreen), xCursorCoordinate, 0, 10, 10);
-                xTemp = xCursorCoordinate;
-                xCursorCoordinate += 10;
-            }
-            else if (xCursorCoordinate == 400)
-            {
-                xTemp = xCursorCoordinate;
-                xCursorCoordinate -= 10;
-            }
-            else if (xCursorCoordinate >= 0 && xCursorCoordinate <= 390 && xCursorCoordinate - xTemp < 0)
-            {
-                xCursorGraphics.FillRectangle(new SolidBrush(Color.LightSeaGreen), xCursorCoordinate, 0, 10, 10);
-                xTemp = xCursorCoordinate;
-                xCursorCoordinate -= 10;
-            }
-            else if (xCursorCoordinate == -10)
-            {
-                xTemp = xCursorCoordinate;
-                xCursorCoordinate += 10;
-            }
-        }
-
-        private void YCursorTimer_Tick(object sender, EventArgs e)
-        {
-            yCursorGraphics.Clear(Color.LightGray);
-            YCursorMovement();
-            yCursorPictureBox.Image = _yCursorBitmap;
-        }
-
-        /// <summary>
-        /// Dictates the way y cursor is moving.
-        /// </summary>
-        private void YCursorMovement()
-        {
-            if (yCursorCoordinate >= 0 && yCursorCoordinate <= 390 && yCursorCoordinate - yTemp > 0)
-            {
-                yCursorGraphics.FillRectangle(new SolidBrush(Color.LightSeaGreen), 0, yCursorCoordinate, 10, 10);
-                yTemp = yCursorCoordinate;
-                yCursorCoordinate += 10;
-            }
-            else if (yCursorCoordinate == 400)
-            {
-                yTemp = yCursorCoordinate;
-                yCursorCoordinate -= 10;
-            }
-            else if (yCursorCoordinate >= 0 && yCursorCoordinate <= 390 && yCursorCoordinate - yTemp < 0)
-            {
-                yCursorGraphics.FillRectangle(new SolidBrush(Color.LightSeaGreen), 0, yCursorCoordinate, 10, 10);
-                yTemp = yCursorCoordinate;
-                yCursorCoordinate -= 10;
-            }
-            else if (yCursorCoordinate == -10)
-            {
-                yTemp = yCursorCoordinate;
-                yCursorCoordinate += 10;
-            }
-        }
-
         private int points;
         private int attempts = 5;
             
@@ -197,6 +34,45 @@ namespace BullseyeCursors
         private int yCoordinate;
         private int spaceKeyPressedCounter;
 
+        /// <summary>
+        /// This method sets up the UI and visual elements of the application.
+        /// Whenever the form is loaded, all the visual elements will be displayed.
+        /// Also, the cursor on x is moving when the application is launched.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            InitializeLabels();
+            targetPictureBox.Image = target.DrawNew();
+            xCursorPictureBox.Image = xCursor.DrawNew();
+            yCursorPictureBox.Image = yCursor.DrawNew();
+
+            // Gets the X cursor moving.
+            xCursorTimer.Interval = 1;
+            xCursorTimer.Enabled = true;
+            xCursorTimer.Start();
+        }
+
+        /// <summary>
+        /// Deals with the design of the labels.
+        /// </summary>
+        private void InitializeLabels()
+        {
+            InitializeAttemptsLabel();
+            InitializePointsLabel();
+            InitializeInstructionsLabel();
+        }
+
+        private void XCursorTimer_Tick(object sender, EventArgs e)
+        {
+            xCursorPictureBox.Image = xCursor.DrawOnTickAndUpdateCoordinateValue();
+        }
+
+        private void YCursorTimer_Tick(object sender, EventArgs e)
+        {
+            yCursorPictureBox.Image = yCursor.DrawOnTickAndUpdateCoordinateValue();
+        }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
@@ -209,13 +85,7 @@ namespace BullseyeCursors
             // RETRY
             if ((Keys)e.KeyValue == Keys.R)
             {
-                targetGraphics.FillEllipse(new SolidBrush(Color.DarkSlateGray), 0, 0, 400, 400);
-                targetGraphics.FillEllipse(new SolidBrush(Color.DarkBlue), 50, 50, 300, 300);
-                targetGraphics.FillEllipse(new SolidBrush(Color.Crimson), 100, 100, 200, 200);
-                targetGraphics.FillEllipse(new SolidBrush(Color.Goldenrod), 150, 150, 100, 100);
-                targetGraphics.FillEllipse(new SolidBrush(Color.ForestGreen), 190, 190, 20, 20);
-
-                targetPictureBox.Image = _targetBitmap;
+                targetPictureBox.Image = target.DrawNew();
 
                 points = 0;
                 pointsLabel.Text = StringResources.GetPointsText(points);
@@ -226,11 +96,12 @@ namespace BullseyeCursors
                 spaceKeyPressedCounter = 0;
                 xCursorTimer.Enabled = true;
                 xCursorTimer.Start();
-                xCursorCoordinate = 0;
-                xTemp = -1;
+                xCursor.ResetCoordinate();
+                xCursor.PreviousCoordinate = -1;
 
-                yCursorCoordinate = 0;
-                yTemp = -1;
+                yCursor.ResetCoordinate();
+                yCursor.PreviousCoordinate = -1;
+                // yTemp = -1;
             }
 
             // SPACE
@@ -242,11 +113,11 @@ namespace BullseyeCursors
                 {
                     xCursorTimer.Stop();
                     xCursorTimer.Enabled = false;
-                    if (xCursorCoordinate - xTemp >= 0)
-                        xCoordinate = xCursorCoordinate - 7;
-                    else if (xCursorCoordinate - xTemp < 0)
-                        xCoordinate = xCursorCoordinate + 14;
-                    xCursorPictureBox.Image = _xCursorBitmap;
+                    if (xCursor.Coordinate - xCursor.PreviousCoordinate >= 0)
+                        xCoordinate = xCursor.Coordinate - 7;
+                    else if (xCursor.Coordinate - xCursor.PreviousCoordinate < 0)
+                        xCoordinate = xCursor.Coordinate + 14;
+                    xCursorPictureBox.Image = xCursor.Bitmap;
 
                     yCursorTimer.Interval = 1;
                     yCursorTimer.Enabled = true;
@@ -257,11 +128,11 @@ namespace BullseyeCursors
                 {
                     yCursorTimer.Stop();
                     yCursorTimer.Enabled = false;
-                    if (yCursorCoordinate - yTemp >= 0)
-                        yCoordinate = yCursorCoordinate - 7;
-                    else if (yCursorCoordinate - yTemp < 0)
-                        yCoordinate = yCursorCoordinate + 14;
-                    yCursorPictureBox.Image = _yCursorBitmap;
+                    if (yCursor.Coordinate - yCursor.PreviousCoordinate >= 0)
+                        yCoordinate = yCursor.Coordinate - 7;
+                    else if (yCursor.Coordinate - yCursor.PreviousCoordinate < 0)
+                        yCoordinate = yCursor.Coordinate + 14;
+                    yCursorPictureBox.Image = yCursor.Bitmap;
                     
                     timer.Enabled = true;
                     timer.Start();
@@ -323,8 +194,7 @@ namespace BullseyeCursors
         /// </summary>
         private void DrawTargetHole()
         {
-            targetGraphics.FillEllipse(new SolidBrush(Color.White), xCoordinate - 4, yCoordinate - 4, 8, 8);
-            targetPictureBox.Image = _targetBitmap;
+            targetPictureBox.Image = target.DrawHoleAt(xCoordinate, yCoordinate);
         }
 
         /// <summary>
@@ -378,12 +248,34 @@ namespace BullseyeCursors
                 spaceKeyPressedCounter = 0;
                 xCursorTimer.Enabled = true;
                 xCursorTimer.Start();
-                xCursorCoordinate = 0;
-                xTemp = -1;
+                xCursor.ResetCoordinate();
+                xCursor.PreviousCoordinate = -1;
 
-                yCursorCoordinate = 0;
-                yTemp = -1;
+                yCursor.ResetCoordinate();
+                yCursor.PreviousCoordinate = -1;
             }
+        }
+        
+        private void InitializeAttemptsLabel()
+        {
+            attemptsLabel.Location = new Point(50, 0);
+            attemptsLabel.Size = new Size(100, 50);
+            attemptsLabel.AutoSize = true;
+            attemptsLabel.Text = StringResources.GetAttemptsText(attempts);
+        }
+
+        private void InitializePointsLabel()
+        {
+            pointsLabel.Location = new Point(250, 0);
+            pointsLabel.Size = new Size(100, 50);
+            pointsLabel.AutoSize = true;
+            pointsLabel.Text = StringResources.GetPointsText(points);
+        }
+
+        private void InitializeInstructionsLabel()
+        {
+            InstructionsLabel.AutoSize = true;
+            InstructionsLabel.Text = StringResources.GetInstructions();
         }
     }
 }

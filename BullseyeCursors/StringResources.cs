@@ -11,8 +11,6 @@ internal static class StringResources
 
     private const string PointsLabel = "Points";
 
-    private const string MinusOne = "-1";
-
     public static string GetInstructions()
         => $"{ShootInstruction}\n{RetryInstruction}\n{ExitInstruction}";
 
@@ -26,5 +24,5 @@ internal static class StringResources
         => $"{AttemptsLabel}: {noOfAttempts}";
 
     public static string GetAttemptsWithMinusOneText(int noOfAttempts)
-        => $"{AttemptsLabel}: {noOfAttempts}{MinusOne}";
+        => $"{AttemptsLabel}: {noOfAttempts}-1";
 }
