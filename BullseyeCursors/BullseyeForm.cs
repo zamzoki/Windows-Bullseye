@@ -261,6 +261,8 @@ namespace BullseyeCursors
                 blackFlag = false;
             }
             
+            // TODO a labels manager should observe attempts and points values and trigger a labels update when attempts or points change
+            // TODO Check out observer pattern
             --attempts;
             pointsLabel.Text = StringResources.GetPointsText(points);
             attemptsLabel.Text = StringResources.GetAttemptsText(attempts);
