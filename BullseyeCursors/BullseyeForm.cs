@@ -165,6 +165,7 @@ namespace BullseyeCursors
 
         private void HandleRetry()
         {
+            xTimer.Stop();
             yTimer.Stop();
             ResetValuesAndLabelsForPointsAndAttempts();
             DrawNewImages();
