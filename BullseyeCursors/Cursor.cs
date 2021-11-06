@@ -98,11 +98,11 @@ namespace BullseyeCursors
             }
             
             this.previousCoordinate = this.coordinate;
-            if (this.IsAtStart() || this.IsBetweenStartAndEnd() && this.IsSlidingToTheRight(delta))
+            if (this.IsAtStart() || this.IsBetweenStartAndEnd() && this.IsMovingToTheRight(delta))
             {
                 this.coordinate += TickStep;
             }
-            else if (this.IsAtEnd() || this.IsBetweenStartAndEnd() && this.IsSlidingToTheLeft(delta))
+            else if (this.IsAtEnd() || this.IsBetweenStartAndEnd() && this.IsMovingToTheLeft(delta))
             {
                 this.coordinate -= TickStep;
             }
@@ -115,9 +115,9 @@ namespace BullseyeCursors
 
         private bool IsBetweenStartAndEnd() => this.coordinate > 0 && this.coordinate < this.Length - TickStep;
 
-        private bool IsSlidingToTheRight(int delta) => delta > 0;
+        private bool IsMovingToTheRight(int delta) => delta > 0;
 
-        private bool IsSlidingToTheLeft(int delta) => delta < 0;
+        private bool IsMovingToTheLeft(int delta) => delta < 0;
 
         private void EnsureDimensionsAreValid(int widthArg, int heightArg)
         {
