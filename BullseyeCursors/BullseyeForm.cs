@@ -66,30 +66,19 @@ namespace BullseyeCursors
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            if ((Keys)e.KeyValue == Keys.Escape)
+            switch (e.KeyValue)
             {
-                HandleClose();
-            }
-            
-            if ((Keys) e.KeyValue == Keys.R)
-            {
-                HandleRetry();
-            }
-            
-            if ((Keys) e.KeyValue != Keys.Space || attemptsManager.RemainingNoOfAttempts <= 0)
-            {
-                return;
-            }
-
-            ++spaceKeyPressedCounter;
-            switch (spaceKeyPressedCounter)
-            {
-                case 1:
-                    HandleFirstSpaceBar();
+                case (int)Keys.Escape:
+                    HandleClose();
                     break;
-                case 2:
-                    HandleSecondSpaceBar();
+                case (int)Keys.R:
+                    HandleRetry();
                     break;
+                case (int)Keys.Space when attemptsManager.RemainingNoOfAttempts > 0:
+                    HandleSpaceBar();
+                    break;
+                default:
+                    return;
             }
         }
         
@@ -102,6 +91,20 @@ namespace BullseyeCursors
             DrawNewForm();
             spaceKeyPressedCounter = 0;
             xCursor.StartMoving();
+        }
+
+        private void HandleSpaceBar()
+        {
+            ++spaceKeyPressedCounter;
+            switch (spaceKeyPressedCounter)
+            {
+                case 1:
+                    HandleFirstSpaceBar();
+                    break;
+                case 2:
+                    HandleSecondSpaceBar();
+                    break;
+            }
         }
 
         private void HandleFirstSpaceBar()
