@@ -21,9 +21,6 @@ namespace BullseyeCursors
             InitializeComponent();
         }
 
-        private const double CenterX = 200;
-        private const double CenterY = 200;
-        
         private bool greenFlag;
         private bool yellowFlag;
         private bool redFlag;
