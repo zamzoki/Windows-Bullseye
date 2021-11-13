@@ -52,7 +52,7 @@ namespace BullseyeCursors
             pointsManager = new PointsManager(pointsLabel);
             
             InitializeTimers();
-            InitializeLabels();
+            InitializeInstructionsLabel();
             DrawNewImages();
             xTimer.Start();
         }
@@ -154,7 +154,6 @@ namespace BullseyeCursors
                     if ((Math.Sqrt(Math.Pow(xCoordinate - CenterX, 2f) + Math.Pow(yCoordinate - CenterY, 2f)) > 150) &&
                         (Math.Sqrt(Math.Pow(xCoordinate - CenterX, 2f) + Math.Pow(yCoordinate - CenterY, 2f)) < 200))
                     {
-                        blackFlag = true;
                         DrawHoleInTarget();
                     }
                     
@@ -243,11 +242,6 @@ namespace BullseyeCursors
         {
             xTimer = new TimerWrapper(xCursorTimer);
             yTimer = new TimerWrapper(yCursorTimer);
-        }
-        
-        private void InitializeLabels()
-        {
-            InitializeInstructionsLabel();
         }
 
         private void InitializeInstructionsLabel()
