@@ -75,13 +75,14 @@ namespace BullseyeCursors
             }
 
             ++spaceKeyPressedCounter;
-            if(spaceKeyPressedCounter == 1)
+            switch (spaceKeyPressedCounter)
             {
-                HandleFirstSpaceBar();
-            }
-            else if (spaceKeyPressedCounter == 2)
-            {
-                HandleSecondSpaceBar();
+                case 1:
+                    HandleFirstSpaceBar();
+                    break;
+                case 2:
+                    HandleSecondSpaceBar();
+                    break;
             }
         }
 
