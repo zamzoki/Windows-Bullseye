@@ -89,7 +89,6 @@ namespace BullseyeCursors
                     {
                         xHitCoordinate = xCursor.Coordinate + 14;
                     }
-                    xCursorPictureBox.Image = xCursor.Bitmap;
 
                     yCursor.StartTimer();
                 }
@@ -102,8 +101,7 @@ namespace BullseyeCursors
                         yHitCoordinate = yCursor.Coordinate - 7;
                     else if (yCursor.Coordinate - yCursor.PreviousCoordinate < 0)
                         yHitCoordinate = yCursor.Coordinate + 14;
-                    yCursorPictureBox.Image = yCursor.Bitmap;
-                    
+
                     timer.Enabled = true;
                     timer.Start();
                     timer.Interval = (750);
@@ -129,9 +127,8 @@ namespace BullseyeCursors
                         pointsToAdd = 10;
                         blueFlag = true;
                     }
-                    
-                    DrawHoleInTarget();
 
+                    DrawHoleInTarget();
                     attemptsManager.DisplayAttemptsMinusOneText();
                     pointsManager.DisplayPointsWithAmountToAdd(pointsToAdd);
                     spaceKeyPressedCounter = 0;
@@ -143,13 +140,18 @@ namespace BullseyeCursors
 
         private void HandleRetry()
         {
-            xCursor.StopTimer();
-            yCursor.StopTimer();
-            timer.Stop();
+            StopAllTimers();
             ResetValuesAndLabelsForPointsAndAttempts();
             DrawNewImages();
             spaceKeyPressedCounter = 0;
             xCursor.StartTimer();
+        }
+
+        private void StopAllTimers()
+        {
+            xCursor.StopTimer();
+            yCursor.StopTimer();
+            timer.Stop();
         }
         
         private void ResetValuesAndLabelsForPointsAndAttempts()
@@ -232,8 +234,8 @@ namespace BullseyeCursors
 
         private void DrawNewCursors()
         {
-            xCursorPictureBox.Image = xCursor.DrawNew();
-            yCursorPictureBox.Image = yCursor.DrawNew();
+            xCursor.DrawNew();
+            yCursor.DrawNew();
         }
     }
 }

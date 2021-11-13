@@ -37,11 +37,11 @@ namespace BullseyeCursors.Models
 
         public int PreviousCoordinate { get; private set; } = -10;
 
-        public Bitmap DrawNew()
+        public void DrawNew()
         {
             this.ResetCoordinate();
             this.DrawElements();
-            return this.Bitmap;
+            this.UpdateImage();
         }
 
         public void DrawOnTickAndUpdateCoordinateValue()
