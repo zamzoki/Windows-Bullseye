@@ -57,6 +57,7 @@
     </Compile>
     <Compile Include="Models\AttemptsManager.cs" />
     <Compile Include="Models\Cursor.cs" />
+    <Compile Include="Models\PointsManager.cs" />
     <Compile Include="Models\Target.cs" />
     <Compile Include="Models\TimerWrapper.cs" />
     <Compile Include="Program.cs" />

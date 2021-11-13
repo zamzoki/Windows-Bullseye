@@ -12,6 +12,7 @@ namespace BullseyeCursors
         private Cursor xCursor;
         private Cursor yCursor;
         private AttemptsManager attemptsManager;
+        private PointsManager pointsManager;
         
         private TimerWrapper xTimer;
         private TimerWrapper yTimer;
@@ -20,8 +21,6 @@ namespace BullseyeCursors
         {
             InitializeComponent();
         }
-
-        private int points;
 
         private const double CenterX = 200;
         private const double CenterY = 200;
@@ -52,6 +51,7 @@ namespace BullseyeCursors
             xCursor = new Cursor(400, 10);
             yCursor = new Cursor(10, 400);
             attemptsManager = new AttemptsManager(5, attemptsLabel);
+            pointsManager = new PointsManager(pointsLabel);
             
             InitializeTimers();
             InitializeLabels();
@@ -160,8 +160,8 @@ namespace BullseyeCursors
                         DrawHoleInTarget();
                     }
                     
-                    pointsLabel.Text = StringResources.GetPointsWithPointsToAddText(points, pointsToAdd);
                     attemptsManager.DisplayAttemptsMinusOneText();
+                    pointsManager.DisplayPointsWithAmountToAdd(pointsToAdd);
                     spaceKeyPressedCounter = 0;
                 }
             }
@@ -181,10 +181,8 @@ namespace BullseyeCursors
         
         private void ResetValuesAndLabelsForPointsAndAttempts()
         {
-            points = 0;
-            pointsLabel.Text = StringResources.GetPointsText(points);
-
             attemptsManager.Reset();
+            pointsManager.Reset();
         }
 
         /// <summary>
@@ -205,36 +203,31 @@ namespace BullseyeCursors
         {
             if (greenFlag)
             {
-                points += 100;
+                pointsManager.AddPoints(100);
                 greenFlag = false;
             }
-
-            if (yellowFlag)
+            else if (yellowFlag)
             {
-                points += 50;
+                pointsManager.AddPoints(50);
                 yellowFlag = false;
             }
-
-            if (redFlag)
+            else if (redFlag)
             {
-                points += 25;
+                pointsManager.AddPoints(25);
                 redFlag = false;
             }
-
-            if (blueFlag)
+            else if (blueFlag)
             {
-                points += 10;
+                pointsManager.AddPoints(10);
                 blueFlag = false;
             }
-
-            if (blackFlag)
+            else
             {
-                points += 0;
+                pointsManager.AddPoints(0);
                 blackFlag = false;
             }
             
             attemptsManager.Decrement();
-            pointsLabel.Text = StringResources.GetPointsText(points);
 
             timer.Stop();
             timer.Enabled = false;
@@ -257,15 +250,6 @@ namespace BullseyeCursors
         private void InitializeLabels()
         {
             InitializeInstructionsLabel();
-            InitializePointsLabel();
-        }
-
-        private void InitializePointsLabel()
-        {
-            pointsLabel.Location = new Point(250, 0);
-            pointsLabel.Size = new Size(100, 50);
-            pointsLabel.AutoSize = true;
-            pointsLabel.Text = StringResources.GetPointsText(points);
         }
 
         private void InitializeInstructionsLabel()
