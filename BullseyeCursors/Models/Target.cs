@@ -37,7 +37,7 @@ namespace BullseyeCursors.Models
 
         public void DrawHoleAt(int x, int y)
         {
-            this.graphics.FillEllipse(new SolidBrush(Color.White), x, y, HoleDiameter, HoleDiameter);
+            this.graphics.FillEllipse(new SolidBrush(Theme.TargetHole), x, y, HoleDiameter, HoleDiameter);
             this.UpdateImage();
         }
 
@@ -96,11 +96,11 @@ namespace BullseyeCursors.Models
 
         private void Initialize()
         {
-            this.graphics.Clear(Color.DarkSlateGray);
-            this.graphics.FillEllipse(new SolidBrush(Color.DarkBlue), 50, 50, BlueAreaDiameter, BlueAreaDiameter);
-            this.graphics.FillEllipse(new SolidBrush(Color.Crimson), 100, 100, RedAreaDiameter, RedAreaDiameter);
-            this.graphics.FillEllipse(new SolidBrush(Color.Goldenrod), 150, 150, YellowAreaDiameter, YellowAreaDiameter);
-            this.graphics.FillEllipse(new SolidBrush(Color.ForestGreen), 190, 190, GreenAreaDiameter, GreenAreaDiameter);
+            this.graphics.Clear(Theme.TargetBackground);
+            this.graphics.FillEllipse(new SolidBrush(Theme.TargetBlue), 50, 50, BlueAreaDiameter, BlueAreaDiameter);
+            this.graphics.FillEllipse(new SolidBrush(Theme.TargetRed), 100, 100, RedAreaDiameter, RedAreaDiameter);
+            this.graphics.FillEllipse(new SolidBrush(Theme.TargetYellow), 150, 150, YellowAreaDiameter, YellowAreaDiameter);
+            this.graphics.FillEllipse(new SolidBrush(Theme.TargetGreen), 190, 190, GreenAreaDiameter, GreenAreaDiameter);
         }
 
         private static double GetRadiusFor(int x, int y)
