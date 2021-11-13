@@ -46,7 +46,7 @@ namespace BullseyeCursors.Models
 
         public void UpdateCoordinateAndDraw()
         {
-            this.IncrementCoordinate();
+            this.HandleCoordinateIncrement();
             this.DrawElements();
             this.UpdateImage();
         }
@@ -103,7 +103,7 @@ namespace BullseyeCursors.Models
             this.cursorGraphics.FillRectangle(new SolidBrush(Color.LightSeaGreen), 0, this.Coordinate, this.width, CursorThickness);
         }
 
-        private void IncrementCoordinate()
+        private void HandleCoordinateIncrement()
         {
             var delta = this.Coordinate - this.PreviousCoordinate; 
             if (delta == 0)
