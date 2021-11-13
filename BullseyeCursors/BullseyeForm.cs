@@ -64,74 +64,90 @@ namespace BullseyeCursors
                 HandleClose();
             }
             
-            if ((Keys)e.KeyValue == Keys.R)
+            if ((Keys) e.KeyValue == Keys.R)
             {
                 HandleRetry();
             }
-
-            // SPACE
-            if((Keys)e.KeyValue == Keys.Space)
+            
+            if ((Keys) e.KeyValue != Keys.Space)
             {
-                ++spaceKeyPressedCounter;
-
-                if(attemptsManager.RemainingNoOfAttempts > 0 && spaceKeyPressedCounter == 1)
-                {
-                    xCursor.StopTimer();
-                    
-                    // TODO investigate these adjustments
-                    if (xCursor.Coordinate - xCursor.PreviousCoordinate >= 0)
-                    {
-                        xHitCoordinate = xCursor.Coordinate - 7;
-                    }
-                    else if (xCursor.Coordinate - xCursor.PreviousCoordinate < 0)
-                    {
-                        xHitCoordinate = xCursor.Coordinate + 14;
-                    }
-
-                    yCursor.StartTimer();
-                }
-
-                if (attemptsManager.RemainingNoOfAttempts > 0 && spaceKeyPressedCounter == 2)
-                {
-                    // TODO investigate these adjustments
-                    yCursor.StopTimer();
-                    if (yCursor.Coordinate - yCursor.PreviousCoordinate >= 0)
-                        yHitCoordinate = yCursor.Coordinate - 7;
-                    else if (yCursor.Coordinate - yCursor.PreviousCoordinate < 0)
-                        yHitCoordinate = yCursor.Coordinate + 14;
-
-                    timer.Enabled = true;
-                    timer.Start();
-                    timer.Interval = (750);
-
-                    var pointsToAdd = 0;
-                    if (Target.IsGreenArea(xHitCoordinate, yHitCoordinate))
-                    {
-                        pointsToAdd = 100;
-                        greenFlag = true;
-                    }
-                    else if (Target.IsYellowArea(xHitCoordinate, yHitCoordinate))
-                    {
-                        pointsToAdd = 50;
-                        yellowFlag = true;
-                    }
-                    else if (Target.IsRedArea(xHitCoordinate, yHitCoordinate))
-                    {
-                        pointsToAdd = 25;
-                        redFlag = true;
-                    }
-                    else if (Target.IsBlueArea(xHitCoordinate, yHitCoordinate))
-                    {
-                        pointsToAdd = 10;
-                        blueFlag = true;
-                    }
-
-                    DrawHoleInTarget();
-                    attemptsManager.DisplayAttemptsMinusOneText();
-                    pointsManager.DisplayPointsWithAmountToAdd(pointsToAdd);
-                    spaceKeyPressedCounter = 0;
-                }
+                return;
             }
+            
+            ++spaceKeyPressedCounter;
+
+            if (attemptsManager.RemainingNoOfAttempts <= 0)
+            {
+                return;
+            }
+
+            if(spaceKeyPressedCounter == 1)
+            {
+                HandleFirstSpaceBar();
+            }
+            
+            if (spaceKeyPressedCounter == 2)
+            {
+                HandleSecondSpaceBar();
+            }
+        }
+
+        private void HandleFirstSpaceBar()
+        {
+            xCursor.StopTimer();
+                
+            // TODO investigate these adjustments
+            if (xCursor.Coordinate - xCursor.PreviousCoordinate >= 0)
+            {
+                xHitCoordinate = xCursor.Coordinate - 7;
+            }
+            else if (xCursor.Coordinate - xCursor.PreviousCoordinate < 0)
+            {
+                xHitCoordinate = xCursor.Coordinate + 14;
+            }
+
+            yCursor.StartTimer();
+        }
+
+        private void HandleSecondSpaceBar()
+        {
+            // TODO investigate these adjustments
+            yCursor.StopTimer();
+            if (yCursor.Coordinate - yCursor.PreviousCoordinate >= 0)
+                yHitCoordinate = yCursor.Coordinate - 7;
+            else if (yCursor.Coordinate - yCursor.PreviousCoordinate < 0)
+                yHitCoordinate = yCursor.Coordinate + 14;
+
+            timer.Enabled = true;
+            timer.Start();
+            timer.Interval = (750);
+
+            var pointsToAdd = 0;
+            if (Target.IsGreenArea(xHitCoordinate, yHitCoordinate))
+            {
+                pointsToAdd = 100;
+                greenFlag = true;
+            }
+            else if (Target.IsYellowArea(xHitCoordinate, yHitCoordinate))
+            {
+                pointsToAdd = 50;
+                yellowFlag = true;
+            }
+            else if (Target.IsRedArea(xHitCoordinate, yHitCoordinate))
+            {
+                pointsToAdd = 25;
+                redFlag = true;
+            }
+            else if (Target.IsBlueArea(xHitCoordinate, yHitCoordinate))
+            {
+                pointsToAdd = 10;
+                blueFlag = true;
+            }
+
+            target.DrawHoleAt(xHitCoordinate, yHitCoordinate);
+            attemptsManager.DisplayAttemptsMinusOneText();
+            pointsManager.DisplayPointsWithAmountToAdd(pointsToAdd);
+            spaceKeyPressedCounter = 0;
         }
 
         private void HandleClose() => this.Close();
@@ -156,14 +172,6 @@ namespace BullseyeCursors
         {
             attemptsManager.Reset();
             pointsManager.Reset();
-        }
-
-        /// <summary>
-        /// Draws a hole at the of (x, y) coordinates.
-        /// </summary>
-        private void DrawHoleInTarget()
-        {
-            target.DrawHoleAt(xHitCoordinate, yHitCoordinate);
         }
 
         /// <summary>
@@ -204,13 +212,14 @@ namespace BullseyeCursors
             timer.Stop();
             timer.Enabled = false;
 
-
-            if(attemptsManager.RemainingNoOfAttempts > 0)
+            if (attemptsManager.RemainingNoOfAttempts == 0)
             {
-                spaceKeyPressedCounter = 0;
-                DrawNewCursors();
-                xCursor.StartTimer();
+                return;
             }
+
+            spaceKeyPressedCounter = 0;
+            DrawNewCursors();
+            xCursor.StartTimer();
         }
 
         private void InitializeInstructionsLabel()
