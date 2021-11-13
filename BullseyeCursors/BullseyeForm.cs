@@ -41,10 +41,6 @@ namespace BullseyeCursors
         /// <param name="e"></param>
         private void Form1_Load(object sender, EventArgs e)
         {
-            // TODO create parent Cursor and children: HorizontalCursor and VerticalCursor
-            // TODO create Theme file with all colors
-            // TODO investigate if 'timer' is actually required
-
             target = new Target(targetPictureBox);
             xCursor = new Cursor(400, 10, xCursorPictureBox, xCursorTimer);
             yCursor = new Cursor(10, 400, yCursorPictureBox, yCursorTimer);
@@ -52,7 +48,7 @@ namespace BullseyeCursors
             pointsManager = new PointsManager(pointsLabel);
             
             InitializeInstructionsLabel();
-            DrawNewImages();
+            DrawNewForm();
             xCursor.StartMoving();
         }
 
@@ -94,6 +90,17 @@ namespace BullseyeCursors
                     break;
             }
         }
+        
+        private void HandleClose() => this.Close();
+
+        private void HandleRetry()
+        {
+            StopAllTimers();
+            ResetValuesAndLabelsForPointsAndAttempts();
+            DrawNewForm();
+            spaceKeyPressedCounter = 0;
+            xCursor.StartMoving();
+        }
 
         private void HandleFirstSpaceBar()
         {
@@ -116,30 +123,6 @@ namespace BullseyeCursors
             timer.Enabled = true;
             timer.Start();
             timer.Interval = 750;
-        }
-
-        private void HandleClose() => this.Close();
-
-        private void HandleRetry()
-        {
-            StopAllTimers();
-            ResetValuesAndLabelsForPointsAndAttempts();
-            DrawNewImages();
-            spaceKeyPressedCounter = 0;
-            xCursor.StartMoving();
-        }
-
-        private void StopAllTimers()
-        {
-            xCursor.StopMoving();
-            yCursor.StopMoving();
-            timer.Stop();
-        }
-        
-        private void ResetValuesAndLabelsForPointsAndAttempts()
-        {
-            attemptsManager.Reset();
-            pointsManager.Reset();
         }
 
         /// <summary>
@@ -165,13 +148,26 @@ namespace BullseyeCursors
             xCursor.StartMoving();
         }
 
+        private void StopAllTimers()
+        {
+            xCursor.StopMoving();
+            yCursor.StopMoving();
+            timer.Stop();
+        }
+        
+        private void ResetValuesAndLabelsForPointsAndAttempts()
+        {
+            attemptsManager.Reset();
+            pointsManager.Reset();
+        }
+
         private void InitializeInstructionsLabel()
         {
             InstructionsLabel.AutoSize = true;
             InstructionsLabel.Text = StringResources.GetInstructions();
         }
 
-        private void DrawNewImages()
+        private void DrawNewForm()
         {
             target.DrawNew();
             DrawNewCursors();
