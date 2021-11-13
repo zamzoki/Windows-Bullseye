@@ -27,9 +27,9 @@ namespace BullseyeCursors.Models
         }
         
         public void DisplayPointsWithAmountToAdd(int pointsToAddArg) 
-            => pointsLabel.Text = StringResources.GetPointsWithPointsToAddText(NoOfPoints, pointsToAddArg);
+            => this.pointsLabel.Text = StringResources.GetPointsWithPointsToAddText(this.NoOfPoints, pointsToAddArg);
         
-        private void UpdateLabelText() => pointsLabel.Text = StringResources.GetPointsText(NoOfPoints);
+        private void UpdateLabelText() => this.pointsLabel.Text = StringResources.GetPointsText(this.NoOfPoints);
 
         private void InitializePointsLabel(Label pointsLabelArg)
         {

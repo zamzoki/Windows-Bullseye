@@ -24,14 +24,14 @@ namespace BullseyeCursors.Models
             this.height = heightArg;
             this.isHorizontal = widthArg >= heightArg;
             this.Bitmap = new Bitmap(widthArg, heightArg);
-            this.cursorGraphics = Graphics.FromImage(Bitmap);
+            this.cursorGraphics = Graphics.FromImage(this.Bitmap);
             this.pictureBox = pictureBoxArg;
             this.timer = timerArg;
         }
         
         private int Length => this.isHorizontal ? this.width : this.height;
 
-        public Bitmap Bitmap { get; }
+        private Bitmap Bitmap { get; }
 
         public int Coordinate { get; private set; }
 
@@ -112,11 +112,11 @@ namespace BullseyeCursors.Models
             }
             
             this.PreviousCoordinate = this.Coordinate;
-            if (this.IsAtStart() || this.IsBetweenStartAndEnd() && this.IsMovingToTheRight(delta))
+            if (this.IsAtStart() || this.IsBetweenStartAndEnd() && IsMovingToTheRight(delta))
             {
                 this.Coordinate += TickStep;
             }
-            else if (this.IsAtEnd() || this.IsBetweenStartAndEnd() && this.IsMovingToTheLeft(delta))
+            else if (this.IsAtEnd() || this.IsBetweenStartAndEnd() && IsMovingToTheLeft(delta))
             {
                 this.Coordinate -= TickStep;
             }
@@ -128,9 +128,9 @@ namespace BullseyeCursors.Models
 
         private bool IsBetweenStartAndEnd() => this.Coordinate > 0 && this.Coordinate < this.Length - TickStep;
 
-        private bool IsMovingToTheRight(int deltaArg) => deltaArg > 0;
+        private static bool IsMovingToTheRight(int deltaArg) => deltaArg > 0;
 
-        private bool IsMovingToTheLeft(int deltaArg) => deltaArg < 0;
+        private static bool IsMovingToTheLeft(int deltaArg) => deltaArg < 0;
 
         private static void EnsureDimensionsAreValid(int widthArg, int heightArg)
         {

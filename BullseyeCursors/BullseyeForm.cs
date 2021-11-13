@@ -105,22 +105,22 @@ namespace BullseyeCursors
                     timer.Interval = (750);
 
                     var pointsToAdd = 0;
-                    if (target.IsGreenArea(xHitCoordinate, yHitCoordinate))
+                    if (Target.IsGreenArea(xHitCoordinate, yHitCoordinate))
                     {
                         pointsToAdd = 100;
                         greenFlag = true;
                     }
-                    else if (target.IsYellowArea(xHitCoordinate, yHitCoordinate))
+                    else if (Target.IsYellowArea(xHitCoordinate, yHitCoordinate))
                     {
                         pointsToAdd = 50;
                         yellowFlag = true;
                     }
-                    else if (target.IsRedArea(xHitCoordinate, yHitCoordinate))
+                    else if (Target.IsRedArea(xHitCoordinate, yHitCoordinate))
                     {
                         pointsToAdd = 25;
                         redFlag = true;
                     }
-                    else if (target.IsBlueArea(xHitCoordinate, yHitCoordinate))
+                    else if (Target.IsBlueArea(xHitCoordinate, yHitCoordinate))
                     {
                         pointsToAdd = 10;
                         blueFlag = true;

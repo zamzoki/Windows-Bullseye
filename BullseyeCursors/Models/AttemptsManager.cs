@@ -42,7 +42,7 @@ namespace BullseyeCursors.Models
             this.attemptsLabel.Location = new Point(50, 0);
             this.attemptsLabel.Size = new Size(100, 50);
             this.attemptsLabel.AutoSize = true;
-            UpdateLabelText();
+            this.UpdateLabelText();
         }
     }
 }

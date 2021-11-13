@@ -30,41 +30,41 @@ namespace BullseyeCursors.Models
 
         public void DrawNew()
         {
-            Initialize();
+            this.Initialize();
             this.UpdateImage();
         }
 
         public void DrawHoleAt(int x, int y)
         {
-            graphics.FillEllipse(new SolidBrush(Color.White), x - 4, y - 4, 8, 8);
+            this.graphics.FillEllipse(new SolidBrush(Color.White), x - 4, y - 4, 8, 8);
             this.UpdateImage();
         }
 
-        public bool IsGreenArea(int x, int y)
+        public static bool IsGreenArea(int x, int y)
             => GetRadiusFor(x, y) <= (double) GreenAreaDiameter / 2;
 
-        public bool IsYellowArea(int x, int y)
+        public static bool IsYellowArea(int x, int y)
             => GetRadiusFor(x, y) > (double) GreenAreaDiameter / 2
                && GetRadiusFor(x, y) <= (double) YellowAreaDiameter / 2;
         
-        public bool IsRedArea(int x, int y)
+        public static bool IsRedArea(int x, int y)
             => GetRadiusFor(x, y) > (double) YellowAreaDiameter / 2
                && GetRadiusFor(x, y) <= (double) RedAreaDiameter / 2;
         
-        public bool IsBlueArea(int x, int y)
+        public static bool IsBlueArea(int x, int y)
             => GetRadiusFor(x, y) > (double) RedAreaDiameter / 2
                && GetRadiusFor(x, y) <= (double) BlueAreaDiameter / 2;
 
         private void Initialize()
         {
-            graphics.Clear(Color.DarkSlateGray);
-            graphics.FillEllipse(new SolidBrush(Color.DarkBlue), 50, 50, BlueAreaDiameter, BlueAreaDiameter);
-            graphics.FillEllipse(new SolidBrush(Color.Crimson), 100, 100, RedAreaDiameter, RedAreaDiameter);
-            graphics.FillEllipse(new SolidBrush(Color.Goldenrod), 150, 150, YellowAreaDiameter, YellowAreaDiameter);
-            graphics.FillEllipse(new SolidBrush(Color.ForestGreen), 190, 190, GreenAreaDiameter, GreenAreaDiameter);
+            this.graphics.Clear(Color.DarkSlateGray);
+            this.graphics.FillEllipse(new SolidBrush(Color.DarkBlue), 50, 50, BlueAreaDiameter, BlueAreaDiameter);
+            this.graphics.FillEllipse(new SolidBrush(Color.Crimson), 100, 100, RedAreaDiameter, RedAreaDiameter);
+            this.graphics.FillEllipse(new SolidBrush(Color.Goldenrod), 150, 150, YellowAreaDiameter, YellowAreaDiameter);
+            this.graphics.FillEllipse(new SolidBrush(Color.ForestGreen), 190, 190, GreenAreaDiameter, GreenAreaDiameter);
         }
 
-        private double GetRadiusFor(int x, int y)
+        private static double GetRadiusFor(int x, int y)
             => Math.Sqrt(Square(x - CenterX) + Square(y - CenterY));
 
         private static double Square(int value) => Math.Pow(value, 2f);
