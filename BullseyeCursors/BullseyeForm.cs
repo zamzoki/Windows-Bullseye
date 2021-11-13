@@ -93,14 +93,14 @@ namespace BullseyeCursors
         private void HandleFirstSpaceBar()
         {
             xCursor.StopTimer();
-            xHitCoordinate = xCursor.PreviousCoordinate;
+            xHitCoordinate = xCursor.Coordinate;
             yCursor.StartTimer();
         }
 
         private void HandleSecondSpaceBar()
         {
             yCursor.StopTimer();
-            yHitCoordinate = yCursor.PreviousCoordinate;
+            yHitCoordinate = yCursor.Coordinate;
 
             timer.Enabled = true;
             timer.Start();

@@ -35,7 +35,7 @@ namespace BullseyeCursors.Models
 
         public int Coordinate { get; private set; }
 
-        public int PreviousCoordinate { get; private set; } = -10;
+        private int PreviousCoordinate { get; set; } = -10;
 
         public void DrawNew()
         {
@@ -46,8 +46,8 @@ namespace BullseyeCursors.Models
 
         public void DrawOnTickAndUpdateCoordinateValue()
         {
-            this.DrawElements();
             this.UpdateCoordinateOnTick();
+            this.DrawElements();
             this.UpdateImage();
         }
 
