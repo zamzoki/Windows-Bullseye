@@ -41,8 +41,6 @@ namespace BullseyeCursors
         /// <param name="e"></param>
         private void Form1_Load(object sender, EventArgs e)
         {
-            // TODO investigate if 'timer' is actually required
-
             target = new Target(targetPictureBox);
             xCursor = new Cursor(400, 10, xCursorPictureBox, xCursorTimer);
             yCursor = new Cursor(10, 400, yCursorPictureBox, yCursorTimer);
@@ -118,16 +116,14 @@ namespace BullseyeCursors
         {
             yCursor.StopMoving();
             yHitCoordinate = yCursor.Coordinate;
-
+            
             target.DrawHoleAt(xHitCoordinate, yHitCoordinate);
             hitArea = Target.ComputeHitArea(xHitCoordinate, yHitCoordinate);
             
             attemptsManager.DisplayAttemptsMinusOneText();
             pointsManager.DisplayPointsWithAmountToAdd(targetAreaPointsDictionary[hitArea]);
 
-            timer.Enabled = true;
-            timer.Start();
-            timer.Interval = 750;
+            StartDynamicDisplayTimer();
         }
 
         /// <summary>
@@ -136,10 +132,9 @@ namespace BullseyeCursors
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Timer_Tick(object sender, EventArgs e)
+        private void DynamicDisplayTimer_Tick(object sender, EventArgs e)
         {
-            timer.Stop();
-            timer.Enabled = false;
+            StopDynamicDisplayTimer();
             
             pointsManager.AddPoints(targetAreaPointsDictionary[hitArea]);
             attemptsManager.Decrement();
@@ -157,7 +152,7 @@ namespace BullseyeCursors
         {
             xCursor.StopMoving();
             yCursor.StopMoving();
-            timer.Stop();
+            dynamicDisplayTimer.Stop();
         }
         
         private void ResetValuesAndLabelsForPointsAndAttempts()
@@ -182,6 +177,20 @@ namespace BullseyeCursors
         {
             xCursor.DrawNew();
             yCursor.DrawNew();
+        }
+
+        private void StartDynamicDisplayTimer()
+        {
+            dynamicDisplayTimer.Enabled = true;
+            dynamicDisplayTimer.Interval = 750;
+            dynamicDisplayTimer.Start();
+            
+        }
+
+        private void StopDynamicDisplayTimer()
+        {
+            dynamicDisplayTimer.Stop();
+            dynamicDisplayTimer.Enabled = false;
         }
     }
 }

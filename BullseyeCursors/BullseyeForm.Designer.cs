@@ -34,7 +34,7 @@
             this.attemptsLabel = new System.Windows.Forms.Label();
             this.InstructionsLabel = new System.Windows.Forms.Label();
             this.pointsLabel = new System.Windows.Forms.Label();
-            this.timer = new System.Windows.Forms.Timer(this.components);
+            this.dynamicDisplayTimer = new System.Windows.Forms.Timer(this.components);
             this.xCursorPictureBox = new System.Windows.Forms.PictureBox();
             this.xCursorTimer = new System.Windows.Forms.Timer(this.components);
             this.yCursorTimer = new System.Windows.Forms.Timer(this.components);
@@ -85,8 +85,8 @@
             // 
             // timer1
             // 
-            this.timer.Interval = 500;
-            this.timer.Tick += new System.EventHandler(this.Timer_Tick);
+            this.dynamicDisplayTimer.Interval = 500;
+            this.dynamicDisplayTimer.Tick += new System.EventHandler(this.DynamicDisplayTimer_Tick);
             // 
             // xCursorPictureBox
             // 
@@ -146,7 +146,7 @@
         private System.Windows.Forms.Label attemptsLabel;
         private System.Windows.Forms.Label InstructionsLabel;
         private System.Windows.Forms.Label pointsLabel;
-        private System.Windows.Forms.Timer timer;
+        private System.Windows.Forms.Timer dynamicDisplayTimer;
         private System.Windows.Forms.PictureBox xCursorPictureBox;
         private System.Windows.Forms.Timer xCursorTimer;
         private System.Windows.Forms.Timer yCursorTimer;
