@@ -16,6 +16,10 @@ namespace BullseyeCursors
             {TargetAreas.Blue, 10},
             {TargetAreas.Gray, 0}
         };
+        
+        private int xHitCoordinate;
+        private int yHitCoordinate;
+        private int spaceKeyPressedCounter;
         private Target target;
         private Cursor xCursor;
         private Cursor yCursor;
@@ -27,10 +31,6 @@ namespace BullseyeCursors
         {
             InitializeComponent();
         }
-
-        private int xHitCoordinate;
-        private int yHitCoordinate;
-        private int spaceKeyPressedCounter;
 
         /// <summary>
         /// This method sets up the UI and visual elements of the application.
