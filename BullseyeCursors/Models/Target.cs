@@ -89,8 +89,9 @@ namespace BullseyeCursors.Models
         
         private static bool IsInArea(int x, int y, double minRadius, double maxRadius)
         {
-            return GetRadiusFor(x, y) >= minRadius
-                   && GetRadiusFor(x, y) < maxRadius;
+            var distanceFromTargetCenterToHitPoint = GetRadiusFor(x, y); 
+            return distanceFromTargetCenterToHitPoint >= minRadius
+                   && distanceFromTargetCenterToHitPoint < maxRadius;
         }
 
         private void Initialize()
