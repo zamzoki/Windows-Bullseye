@@ -49,12 +49,12 @@ namespace BullseyeCursors
 
         private void XCursorTimer_Tick(object sender, EventArgs e)
         {
-            xCursor.DrawOnTickAndUpdateCoordinateValue();
+            xCursor.UpdateCoordinateAndDraw();
         }
 
         private void YCursorTimer_Tick(object sender, EventArgs e)
         {
-            yCursor.DrawOnTickAndUpdateCoordinateValue();
+            yCursor.UpdateCoordinateAndDraw();
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
