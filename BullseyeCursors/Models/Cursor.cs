@@ -57,14 +57,14 @@ namespace BullseyeCursors.Models
             this.PreviousCoordinate = -1;
         }
 
-        public void StartTimer()
+        public void StartMoving()
         {
             this.timer.Interval = 1;
             this.timer.Enabled = true;
             this.timer.Start();
         }
 
-        public void StopTimer()
+        public void StopMoving()
         {
             this.timer.Stop();
             this.timer.Enabled = false;

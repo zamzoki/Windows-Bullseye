@@ -52,7 +52,7 @@ namespace BullseyeCursors
             
             InitializeInstructionsLabel();
             DrawNewImages();
-            xCursor.StartTimer();
+            xCursor.StartMoving();
         }
 
         private void XCursorTimer_Tick(object sender, EventArgs e)
@@ -96,14 +96,14 @@ namespace BullseyeCursors
 
         private void HandleFirstSpaceBar()
         {
-            xCursor.StopTimer();
+            xCursor.StopMoving();
             xHitCoordinate = xCursor.Coordinate;
-            yCursor.StartTimer();
+            yCursor.StartMoving();
         }
 
         private void HandleSecondSpaceBar()
         {
-            yCursor.StopTimer();
+            yCursor.StopMoving();
             yHitCoordinate = yCursor.Coordinate;
 
             target.DrawHoleAt(xHitCoordinate, yHitCoordinate);
@@ -125,13 +125,13 @@ namespace BullseyeCursors
             ResetValuesAndLabelsForPointsAndAttempts();
             DrawNewImages();
             spaceKeyPressedCounter = 0;
-            xCursor.StartTimer();
+            xCursor.StartMoving();
         }
 
         private void StopAllTimers()
         {
-            xCursor.StopTimer();
-            yCursor.StopTimer();
+            xCursor.StopMoving();
+            yCursor.StopMoving();
             timer.Stop();
         }
         
@@ -161,7 +161,7 @@ namespace BullseyeCursors
 
             spaceKeyPressedCounter = 0;
             DrawNewCursors();
-            xCursor.StartTimer();
+            xCursor.StartMoving();
         }
 
         private void InitializeInstructionsLabel()
