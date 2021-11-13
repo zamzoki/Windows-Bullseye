@@ -35,7 +35,7 @@ namespace BullseyeCursors.Models
 
         public int Coordinate { get; private set; }
 
-        private int PreviousCoordinate { get; set; } = -10;
+        private int PreviousCoordinate { get; set; } = -1;
 
         public void DrawNew()
         {
