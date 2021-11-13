@@ -74,13 +74,12 @@ namespace BullseyeCursors
                 return;
             }
             
-            ++spaceKeyPressedCounter;
-
             if (attemptsManager.RemainingNoOfAttempts <= 0)
             {
                 return;
             }
-
+            
+            ++spaceKeyPressedCounter;
             if(spaceKeyPressedCounter == 1)
             {
                 HandleFirstSpaceBar();
@@ -110,8 +109,9 @@ namespace BullseyeCursors
 
         private void HandleSecondSpaceBar()
         {
-            // TODO investigate these adjustments
             yCursor.StopTimer();
+            
+            // TODO investigate these adjustments
             if (yCursor.Coordinate - yCursor.PreviousCoordinate >= 0)
             {
                 yHitCoordinate = yCursor.Coordinate - 7;
@@ -210,11 +210,10 @@ namespace BullseyeCursors
                 pointsManager.AddPoints(0);
             }
             
-            attemptsManager.Decrement();
-
             timer.Stop();
             timer.Enabled = false;
-
+            
+            attemptsManager.Decrement();
             if (attemptsManager.RemainingNoOfAttempts == 0)
             {
                 return;
