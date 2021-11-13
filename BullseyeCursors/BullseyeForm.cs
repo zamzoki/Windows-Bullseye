@@ -114,32 +114,22 @@ namespace BullseyeCursors
                     timer.Interval = (750);
 
                     var pointsToAdd = 0;
-                    // Green area 100p
-                    if (Math.Sqrt(Math.Pow(xCoordinate - CenterX, 2f) + Math.Pow(yCoordinate - CenterY, 2f)) < 10)
+                    if (target.IsGreenArea(xCoordinate, yCoordinate))
                     {
                         pointsToAdd = 100;
                         greenFlag = true;
                     }
-
-                    // Yellow area 50p
-                    if ((Math.Sqrt(Math.Pow(xCoordinate - CenterX, 2f) + Math.Pow(yCoordinate - CenterY, 2f)) > 10) &&
-                        (Math.Sqrt(Math.Pow(xCoordinate - CenterX, 2f) + Math.Pow(yCoordinate - CenterY, 2f)) < 50))
+                    else if (target.IsYellowArea(xCoordinate, yCoordinate))
                     {
                         pointsToAdd = 50;
                         yellowFlag = true;
                     }
-
-                    // Red area 25p
-                    if ((Math.Sqrt(Math.Pow(xCoordinate - CenterX, 2f) + Math.Pow(yCoordinate - CenterY, 2f)) > 50) &&
-                        (Math.Sqrt(Math.Pow(xCoordinate - CenterX, 2f) + Math.Pow(yCoordinate - CenterY, 2f)) < 100))
+                    else if (target.IsRedArea(xCoordinate, yCoordinate))
                     {
                         pointsToAdd = 25;
                         redFlag = true;
                     }
-
-                    // Blue area 10p
-                    if ((Math.Sqrt(Math.Pow(xCoordinate - CenterX, 2f) + Math.Pow(yCoordinate - CenterY, 2f)) > 100) &&
-                        (Math.Sqrt(Math.Pow(xCoordinate - CenterX, 2f) + Math.Pow(yCoordinate - CenterY, 2f)) < 150))
+                    else if (target.IsBlueArea(xCoordinate, yCoordinate))
                     {
                         pointsToAdd = 10;
                         blueFlag = true;
