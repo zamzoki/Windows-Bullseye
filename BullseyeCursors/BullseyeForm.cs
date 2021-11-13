@@ -43,6 +43,7 @@ namespace BullseyeCursors
         {
             // TODO create parent Cursor and children: HorizontalCursor and VerticalCursor
             // TODO create Theme file with all colors
+            // TODO investigate if 'timer' is actually required
 
             target = new Target(targetPictureBox);
             xCursor = new Cursor(400, 10, xCursorPictureBox, xCursorTimer);
