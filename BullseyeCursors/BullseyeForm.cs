@@ -8,7 +8,7 @@ namespace BullseyeCursors
 {
     public partial class BullseyeForm : Form
     {
-        private Dictionary<TargetAreas, int> targetAreaPointsDictionary = new Dictionary<TargetAreas, int>
+        private readonly Dictionary<TargetAreas, int> targetAreaPointsDictionary = new Dictionary<TargetAreas, int>
         {
             {TargetAreas.Green, 100},
             {TargetAreas.Yellow, 50},
