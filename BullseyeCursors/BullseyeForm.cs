@@ -153,7 +153,6 @@ namespace BullseyeCursors
             timer.Enabled = false;
             
             pointsManager.AddPoints(targetAreaPointsDictionary[hitArea]);
-
             attemptsManager.Decrement();
             if (attemptsManager.RemainingNoOfAttempts == 0)
             {
