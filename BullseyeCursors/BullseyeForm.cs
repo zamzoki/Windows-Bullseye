@@ -45,7 +45,6 @@ namespace BullseyeCursors
         /// <param name="e"></param>
         private void Form1_Load(object sender, EventArgs e)
         {
-            // TODO: move Attempts Label inside Attempts Manager
             // TODO: create Points Manager
             // TODO: move TimerWrapper inside Cursor
 
