@@ -12,6 +12,7 @@ namespace BullseyeCursors.Models
         private readonly int width;
         private readonly int height;
         private readonly bool isHorizontal;
+        private readonly Bitmap bitmap;
         private readonly Graphics cursorGraphics;
         private readonly PictureBox pictureBox;
         private readonly Timer timer;
@@ -23,15 +24,13 @@ namespace BullseyeCursors.Models
             this.width = widthArg;
             this.height = heightArg;
             this.isHorizontal = widthArg >= heightArg;
-            this.Bitmap = new Bitmap(widthArg, heightArg);
-            this.cursorGraphics = Graphics.FromImage(this.Bitmap);
+            this.bitmap = new Bitmap(widthArg, heightArg);
+            this.cursorGraphics = Graphics.FromImage(this.bitmap);
             this.pictureBox = pictureBoxArg;
             this.timer = timerArg;
         }
         
         private int Length => this.isHorizontal ? this.width : this.height;
-
-        private Bitmap Bitmap { get; }
 
         public int Coordinate { get; private set; }
 
@@ -146,6 +145,6 @@ namespace BullseyeCursors.Models
             }
         }
 
-        private void UpdateImage() => this.pictureBox.Image = this.Bitmap;
+        private void UpdateImage() => this.pictureBox.Image = this.bitmap;
     }
 }
