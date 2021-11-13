@@ -36,9 +36,7 @@ namespace BullseyeCursors
         /// <param name="e"></param>
         private void Form1_Load(object sender, EventArgs e)
         {
-            // TODO: move TimerWrapper inside Cursor
-
-            target = new Target();
+            target = new Target(targetPictureBox);
             xCursor = new Cursor(400, 10, xCursorPictureBox, xCursorTimer);
             yCursor = new Cursor(10, 400, yCursorPictureBox, yCursorTimer);
             attemptsManager = new AttemptsManager(5, attemptsLabel);
@@ -165,7 +163,7 @@ namespace BullseyeCursors
         /// </summary>
         private void DrawHoleInTarget()
         {
-            targetPictureBox.Image = target.DrawHoleAt(xHitCoordinate, yHitCoordinate);
+            target.DrawHoleAt(xHitCoordinate, yHitCoordinate);
         }
 
         /// <summary>
@@ -223,13 +221,8 @@ namespace BullseyeCursors
 
         private void DrawNewImages()
         {
-            DrawNewTarget();
+            target.DrawNew();
             DrawNewCursors();
-        }
-
-        private void DrawNewTarget()
-        {
-            targetPictureBox.Image = target.DrawNew();
         }
 
         private void DrawNewCursors()

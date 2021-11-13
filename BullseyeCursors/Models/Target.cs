@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace BullseyeCursors.Models
 {
@@ -11,29 +12,32 @@ namespace BullseyeCursors.Models
         private const int YellowAreaDiameter = 100;
         private const int RedAreaDiameter = 200;
         private const int BlueAreaDiameter = 300;
+        
         private readonly Bitmap bitmap;
         private readonly Graphics graphics;
+        private readonly PictureBox pictureBox;
 
-        public Target()
+        public Target(PictureBox pictureBoxArg)
         {
-            bitmap = new Bitmap(Width, Height);
-            graphics = Graphics.FromImage(bitmap);
+            this.bitmap = new Bitmap(Width, Height);
+            this.graphics = Graphics.FromImage(bitmap);
+            this.pictureBox = pictureBoxArg;
         }
         
         private static int CenterX => Width / 2;
 
         private static int CenterY => Height / 2;
 
-        public Bitmap DrawNew()
+        public void DrawNew()
         {
             Initialize();
-            return bitmap;
+            this.UpdateImage();
         }
 
-        public Bitmap DrawHoleAt(int x, int y)
+        public void DrawHoleAt(int x, int y)
         {
             graphics.FillEllipse(new SolidBrush(Color.White), x - 4, y - 4, 8, 8);
-            return bitmap;
+            this.UpdateImage();
         }
 
         public bool IsGreenArea(int x, int y)
@@ -64,5 +68,7 @@ namespace BullseyeCursors.Models
             => Math.Sqrt(Square(x - CenterX) + Square(y - CenterY));
 
         private static double Square(int value) => Math.Pow(value, 2f);
+
+        private void UpdateImage() => this.pictureBox.Image = this.bitmap;
     }
 }
