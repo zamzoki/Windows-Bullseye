@@ -76,9 +76,7 @@ namespace BullseyeCursors.Models
         }
 
         private void DrawTrack()
-        {
-            this.cursorGraphics.Clear(Color.LightGray);
-        }
+            => this.cursorGraphics.Clear(Color.LightGray);
 
         private void DrawCursor()
         {
@@ -93,14 +91,10 @@ namespace BullseyeCursors.Models
         }
 
         private void DrawCursorForHorizontalTrack()
-        {
-            this.cursorGraphics.FillRectangle(new SolidBrush(Color.LightSeaGreen), this.Coordinate, 0, CursorThickness, this.height);
-        }
+            => this.cursorGraphics.FillRectangle(new SolidBrush(Color.LightSeaGreen), this.Coordinate, 0, CursorThickness, this.height);
 
         private void DrawCursorForVerticalTrack()
-        {
-            this.cursorGraphics.FillRectangle(new SolidBrush(Color.LightSeaGreen), 0, this.Coordinate, this.width, CursorThickness);
-        }
+            => this.cursorGraphics.FillRectangle(new SolidBrush(Color.LightSeaGreen), 0, this.Coordinate, this.width, CursorThickness);
 
         private void HandleCoordinateIncrement()
         {

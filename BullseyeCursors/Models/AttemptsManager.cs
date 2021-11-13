@@ -29,9 +29,7 @@ namespace BullseyeCursors.Models
         }
 
         public void DisplayAttemptsMinusOneText()
-        {
-            this.attemptsLabel.Text = StringResources.GetAttemptsWithMinusOneText(this.RemainingNoOfAttempts);
-        }
+            => this.attemptsLabel.Text = StringResources.GetAttemptsWithMinusOneText(this.RemainingNoOfAttempts);
         
         private void UpdateLabelText() => this.attemptsLabel.Text = StringResources.GetAttemptsText(this.RemainingNoOfAttempts);
 
