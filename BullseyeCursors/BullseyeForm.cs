@@ -85,8 +85,7 @@ namespace BullseyeCursors
             {
                 HandleFirstSpaceBar();
             }
-            
-            if (spaceKeyPressedCounter == 2)
+            else if (spaceKeyPressedCounter == 2)
             {
                 HandleSecondSpaceBar();
             }
