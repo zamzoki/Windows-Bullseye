@@ -69,16 +69,11 @@ namespace BullseyeCursors
                 HandleRetry();
             }
             
-            if ((Keys) e.KeyValue != Keys.Space)
+            if ((Keys) e.KeyValue != Keys.Space || attemptsManager.RemainingNoOfAttempts <= 0)
             {
                 return;
             }
-            
-            if (attemptsManager.RemainingNoOfAttempts <= 0)
-            {
-                return;
-            }
-            
+
             ++spaceKeyPressedCounter;
             if(spaceKeyPressedCounter == 1)
             {
