@@ -27,7 +27,7 @@ namespace BullseyeCursors.Models
 
         private void Initialize()
         {
-            graphics.FillEllipse(new SolidBrush(Color.DarkSlateGray), 0, 0, 400, 400);
+            graphics.Clear(Color.DarkSlateGray);
             graphics.FillEllipse(new SolidBrush(Color.DarkBlue), 50, 50, 300, 300);
             graphics.FillEllipse(new SolidBrush(Color.Crimson), 100, 100, 200, 200);
             graphics.FillEllipse(new SolidBrush(Color.Goldenrod), 150, 150, 100, 100);

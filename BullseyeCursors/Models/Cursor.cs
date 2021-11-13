@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Runtime.CompilerServices;
 
 namespace BullseyeCursors.Models
 {
@@ -91,18 +92,17 @@ namespace BullseyeCursors.Models
 
         private void UpdateCoordinateOnTick()
         {
-            var delta = this.coordinate - this.previousCoordinate;
-            if (delta == 0)
+            if (this.coordinate - this.previousCoordinate == 0)
             {
-                throw new Exception($"\"{nameof(delta)}\" cannot be zero.");
+                throw new Exception($"Displacement cannot be zero.");
             }
             
             this.previousCoordinate = this.coordinate;
-            if (this.IsAtStart() || this.IsBetweenStartAndEnd() && this.IsMovingToTheRight(delta))
+            if (this.IsAtStart() || this.IsBetweenStartAndEnd() && this.IsMovingToTheRight())
             {
                 this.coordinate += TickStep;
             }
-            else if (this.IsAtEnd() || this.IsBetweenStartAndEnd() && this.IsMovingToTheLeft(delta))
+            else if (this.IsAtEnd() || this.IsBetweenStartAndEnd() && this.IsMovingToTheLeft())
             {
                 this.coordinate -= TickStep;
             }
@@ -115,17 +115,17 @@ namespace BullseyeCursors.Models
 
         private bool IsBetweenStartAndEnd() => this.coordinate > 0 && this.coordinate < this.Length - TickStep;
 
-        private bool IsMovingToTheRight(int delta) => delta > 0;
+        private bool IsMovingToTheRight() => this.coordinate - this.previousCoordinate > 0;
 
-        private bool IsMovingToTheLeft(int delta) => delta < 0;
+        private bool IsMovingToTheLeft() => this.coordinate - this.previousCoordinate < 0;
 
-        private void EnsureDimensionsAreValid(int widthArg, int heightArg)
+        private static void EnsureDimensionsAreValid(int widthArg, int heightArg)
         {
             EnsureDimensionIsValid(widthArg, nameof(widthArg));
             EnsureDimensionIsValid(heightArg, nameof(heightArg));
         }
 
-        private void EnsureDimensionIsValid(int dimension, string nameOfDimension)
+        private static void EnsureDimensionIsValid(int dimension, string nameOfDimension)
         {
             if (dimension <= 0)
             {

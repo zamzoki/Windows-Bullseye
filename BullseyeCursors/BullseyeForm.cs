@@ -120,7 +120,6 @@ namespace BullseyeCursors
                     {
                         pointsToAdd = 100;
                         greenFlag = true;
-                        DrawHoleInTarget();
                     }
 
                     // Yellow area 50p
@@ -129,7 +128,6 @@ namespace BullseyeCursors
                     {
                         pointsToAdd = 50;
                         yellowFlag = true;
-                        DrawHoleInTarget();
                     }
 
                     // Red area 25p
@@ -138,7 +136,6 @@ namespace BullseyeCursors
                     {
                         pointsToAdd = 25;
                         redFlag = true;
-                        DrawHoleInTarget();
                     }
 
                     // Blue area 10p
@@ -147,16 +144,10 @@ namespace BullseyeCursors
                     {
                         pointsToAdd = 10;
                         blueFlag = true;
-                        DrawHoleInTarget();
-                    }
-
-                    // Black area 0p
-                    if ((Math.Sqrt(Math.Pow(xCoordinate - CenterX, 2f) + Math.Pow(yCoordinate - CenterY, 2f)) > 150) &&
-                        (Math.Sqrt(Math.Pow(xCoordinate - CenterX, 2f) + Math.Pow(yCoordinate - CenterY, 2f)) < 200))
-                    {
-                        DrawHoleInTarget();
                     }
                     
+                    DrawHoleInTarget();
+
                     attemptsManager.DisplayAttemptsMinusOneText();
                     pointsManager.DisplayPointsWithAmountToAdd(pointsToAdd);
                     spaceKeyPressedCounter = 0;
@@ -221,7 +212,6 @@ namespace BullseyeCursors
             else
             {
                 pointsManager.AddPoints(0);
-                blackFlag = false;
             }
             
             attemptsManager.Decrement();
