@@ -41,20 +41,57 @@ namespace BullseyeCursors.Models
             this.UpdateImage();
         }
 
-        public static bool IsGreenArea(int x, int y)
-            => GetRadiusFor(x, y) <= (double) GreenAreaDiameter / 2;
+        public static TargetAreas ComputeHitArea(int x, int y)
+        {
+            if (IsGreenArea(x, y, out var greenArea))
+            {
+                return greenArea;
+            }
+            
+            if (IsYellowArea(x, y, out var yellowArea))
+            {
+                return yellowArea;
+            }
 
-        public static bool IsYellowArea(int x, int y)
-            => GetRadiusFor(x, y) > (double) GreenAreaDiameter / 2
-               && GetRadiusFor(x, y) <= (double) YellowAreaDiameter / 2;
+            if (IsRedArea(x, y, out var redArea))
+            {
+                return redArea;
+            }
+
+            return IsBlueArea(x, y, out var blueArea) 
+                ? blueArea : 
+                TargetAreas.Gray;
+        }
+
+        private static bool IsGreenArea(int x, int y, out TargetAreas area)
+        {
+            area = TargetAreas.Green;
+            return IsInArea(x, y, 0, (double) GreenAreaDiameter / 2);
+        }
+
+        private static bool IsYellowArea(int x, int y, out TargetAreas area)
+        {
+            area = TargetAreas.Yellow;
+            return IsInArea(x, y, (double) GreenAreaDiameter / 2, (double) YellowAreaDiameter / 2);
+        }
+
+        private static bool IsRedArea(int x, int y, out TargetAreas area)
+        {
+            area = TargetAreas.Red;
+            return IsInArea(x, y, (double) YellowAreaDiameter / 2, (double) RedAreaDiameter / 2);
+        }
+
+        private static bool IsBlueArea(int x, int y, out TargetAreas area)
+        {
+            area = TargetAreas.Blue;
+            return IsInArea(x, y, (double) RedAreaDiameter / 2, (double) BlueAreaDiameter / 2);
+        }
         
-        public static bool IsRedArea(int x, int y)
-            => GetRadiusFor(x, y) > (double) YellowAreaDiameter / 2
-               && GetRadiusFor(x, y) <= (double) RedAreaDiameter / 2;
-        
-        public static bool IsBlueArea(int x, int y)
-            => GetRadiusFor(x, y) > (double) RedAreaDiameter / 2
-               && GetRadiusFor(x, y) <= (double) BlueAreaDiameter / 2;
+        private static bool IsInArea(int x, int y, double minRadius, double maxRadius)
+        {
+            return GetRadiusFor(x, y) >= minRadius
+                   && GetRadiusFor(x, y) < maxRadius;
+        }
 
         private void Initialize()
         {
@@ -66,10 +103,13 @@ namespace BullseyeCursors.Models
         }
 
         private static double GetRadiusFor(int x, int y)
-            => Math.Sqrt(Square(x - CenterX) + Square(y - CenterY));
+            => Math.Sqrt(Square(ComputeHoleCenterOnAxis(x, CenterX)) + Square(ComputeHoleCenterOnAxis(y, CenterY)));
 
-        private static double Square(int value) => Math.Pow(value, 2f);
+        private static double Square(double value) => Math.Pow(value, 2f);
 
         private void UpdateImage() => this.pictureBox.Image = this.bitmap;
+
+        private static double ComputeHoleCenterOnAxis(int hitCoordinate, int targetCenter)
+            => (hitCoordinate - targetCenter + HoleDiameter / 2);
     }
 }

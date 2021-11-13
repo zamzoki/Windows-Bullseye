@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using BullseyeCursors.Models;
 using Cursor = BullseyeCursors.Models.Cursor;
@@ -7,21 +8,25 @@ namespace BullseyeCursors
 {
     public partial class BullseyeForm : Form
     {
+        private Dictionary<TargetAreas, int> targetAreaPointsDictionary = new Dictionary<TargetAreas, int>
+        {
+            {TargetAreas.Green, 100},
+            {TargetAreas.Yellow, 50},
+            {TargetAreas.Red, 25},
+            {TargetAreas.Blue, 10},
+            {TargetAreas.Gray, 0}
+        };
         private Target target;
         private Cursor xCursor;
         private Cursor yCursor;
         private AttemptsManager attemptsManager;
         private PointsManager pointsManager;
-
+        private TargetAreas hitArea;
+         
         public BullseyeForm()
         {
             InitializeComponent();
         }
-
-        private bool greenFlag;
-        private bool yellowFlag;
-        private bool redFlag;
-        private bool blueFlag;
 
         private int xHitCoordinate;
         private int yHitCoordinate;
@@ -36,6 +41,9 @@ namespace BullseyeCursors
         /// <param name="e"></param>
         private void Form1_Load(object sender, EventArgs e)
         {
+            // TODO create parent Cursor and children: HorizontalCursor and VerticalCursor
+            // TODO create Theme file with all colors
+
             target = new Target(targetPictureBox);
             xCursor = new Cursor(400, 10, xCursorPictureBox, xCursorTimer);
             yCursor = new Cursor(10, 400, yCursorPictureBox, yCursorTimer);
@@ -98,36 +106,15 @@ namespace BullseyeCursors
             yCursor.StopTimer();
             yHitCoordinate = yCursor.Coordinate;
 
+            target.DrawHoleAt(xHitCoordinate, yHitCoordinate);
+            hitArea = Target.ComputeHitArea(xHitCoordinate, yHitCoordinate);
+            
+            attemptsManager.DisplayAttemptsMinusOneText();
+            pointsManager.DisplayPointsWithAmountToAdd(targetAreaPointsDictionary[hitArea]);
+
             timer.Enabled = true;
             timer.Start();
             timer.Interval = 750;
-
-            var pointsToAdd = 0;
-            if (Target.IsGreenArea(xHitCoordinate, yHitCoordinate))
-            {
-                pointsToAdd = 100;
-                greenFlag = true;
-            }
-            else if (Target.IsYellowArea(xHitCoordinate, yHitCoordinate))
-            {
-                pointsToAdd = 50;
-                yellowFlag = true;
-            }
-            else if (Target.IsRedArea(xHitCoordinate, yHitCoordinate))
-            {
-                pointsToAdd = 25;
-                redFlag = true;
-            }
-            else if (Target.IsBlueArea(xHitCoordinate, yHitCoordinate))
-            {
-                pointsToAdd = 10;
-                blueFlag = true;
-            }
-
-            target.DrawHoleAt(xHitCoordinate, yHitCoordinate);
-            attemptsManager.DisplayAttemptsMinusOneText();
-            pointsManager.DisplayPointsWithAmountToAdd(pointsToAdd);
-            spaceKeyPressedCounter = 0;
         }
 
         private void HandleClose() => this.Close();
@@ -162,34 +149,11 @@ namespace BullseyeCursors
         /// <param name="e"></param>
         private void Timer_Tick(object sender, EventArgs e)
         {
-            if (greenFlag)
-            {
-                pointsManager.AddPoints(100);
-                greenFlag = false;
-            }
-            else if (yellowFlag)
-            {
-                pointsManager.AddPoints(50);
-                yellowFlag = false;
-            }
-            else if (redFlag)
-            {
-                pointsManager.AddPoints(25);
-                redFlag = false;
-            }
-            else if (blueFlag)
-            {
-                pointsManager.AddPoints(10);
-                blueFlag = false;
-            }
-            else
-            {
-                pointsManager.AddPoints(0);
-            }
-            
             timer.Stop();
             timer.Enabled = false;
             
+            pointsManager.AddPoints(targetAreaPointsDictionary[hitArea]);
+
             attemptsManager.Decrement();
             if (attemptsManager.RemainingNoOfAttempts == 0)
             {
