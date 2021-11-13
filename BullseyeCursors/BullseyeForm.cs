@@ -12,10 +12,7 @@ namespace BullseyeCursors
         private Cursor yCursor;
         private AttemptsManager attemptsManager;
         private PointsManager pointsManager;
-        
-        private TimerWrapper xTimer;
-        private TimerWrapper yTimer;
-        
+
         public BullseyeForm()
         {
             InitializeComponent();
@@ -26,8 +23,8 @@ namespace BullseyeCursors
         private bool redFlag;
         private bool blueFlag;
 
-        private int xCoordinate;
-        private int yCoordinate;
+        private int xHitCoordinate;
+        private int yHitCoordinate;
         private int spaceKeyPressedCounter;
 
         /// <summary>
@@ -42,25 +39,24 @@ namespace BullseyeCursors
             // TODO: move TimerWrapper inside Cursor
 
             target = new Target();
-            xCursor = new Cursor(400, 10);
-            yCursor = new Cursor(10, 400);
+            xCursor = new Cursor(400, 10, xCursorPictureBox, xCursorTimer);
+            yCursor = new Cursor(10, 400, yCursorPictureBox, yCursorTimer);
             attemptsManager = new AttemptsManager(5, attemptsLabel);
             pointsManager = new PointsManager(pointsLabel);
             
-            InitializeTimers();
             InitializeInstructionsLabel();
             DrawNewImages();
-            xTimer.Start();
+            xCursor.StartTimer();
         }
 
         private void XCursorTimer_Tick(object sender, EventArgs e)
         {
-            xCursorPictureBox.Image = xCursor.DrawOnTickAndUpdateCoordinateValue();
+            xCursor.DrawOnTickAndUpdateCoordinateValue();
         }
 
         private void YCursorTimer_Tick(object sender, EventArgs e)
         {
-            yCursorPictureBox.Image = yCursor.DrawOnTickAndUpdateCoordinateValue();
+            yCursor.DrawOnTickAndUpdateCoordinateValue();
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -82,28 +78,30 @@ namespace BullseyeCursors
 
                 if(attemptsManager.RemainingNoOfAttempts > 0 && spaceKeyPressedCounter == 1)
                 {
-                    xTimer.Stop();
+                    xCursor.StopTimer();
                     
+                    // TODO investigate these adjustments
                     if (xCursor.Coordinate - xCursor.PreviousCoordinate >= 0)
                     {
-                        xCoordinate = xCursor.Coordinate - 7;
+                        xHitCoordinate = xCursor.Coordinate - 7;
                     }
                     else if (xCursor.Coordinate - xCursor.PreviousCoordinate < 0)
                     {
-                        xCoordinate = xCursor.Coordinate + 14;
+                        xHitCoordinate = xCursor.Coordinate + 14;
                     }
                     xCursorPictureBox.Image = xCursor.Bitmap;
 
-                    yTimer.Start();
+                    yCursor.StartTimer();
                 }
 
                 if (attemptsManager.RemainingNoOfAttempts > 0 && spaceKeyPressedCounter == 2)
                 {
-                    yTimer.Stop();
+                    // TODO investigate these adjustments
+                    yCursor.StopTimer();
                     if (yCursor.Coordinate - yCursor.PreviousCoordinate >= 0)
-                        yCoordinate = yCursor.Coordinate - 7;
+                        yHitCoordinate = yCursor.Coordinate - 7;
                     else if (yCursor.Coordinate - yCursor.PreviousCoordinate < 0)
-                        yCoordinate = yCursor.Coordinate + 14;
+                        yHitCoordinate = yCursor.Coordinate + 14;
                     yCursorPictureBox.Image = yCursor.Bitmap;
                     
                     timer.Enabled = true;
@@ -111,22 +109,22 @@ namespace BullseyeCursors
                     timer.Interval = (750);
 
                     var pointsToAdd = 0;
-                    if (target.IsGreenArea(xCoordinate, yCoordinate))
+                    if (target.IsGreenArea(xHitCoordinate, yHitCoordinate))
                     {
                         pointsToAdd = 100;
                         greenFlag = true;
                     }
-                    else if (target.IsYellowArea(xCoordinate, yCoordinate))
+                    else if (target.IsYellowArea(xHitCoordinate, yHitCoordinate))
                     {
                         pointsToAdd = 50;
                         yellowFlag = true;
                     }
-                    else if (target.IsRedArea(xCoordinate, yCoordinate))
+                    else if (target.IsRedArea(xHitCoordinate, yHitCoordinate))
                     {
                         pointsToAdd = 25;
                         redFlag = true;
                     }
-                    else if (target.IsBlueArea(xCoordinate, yCoordinate))
+                    else if (target.IsBlueArea(xHitCoordinate, yHitCoordinate))
                     {
                         pointsToAdd = 10;
                         blueFlag = true;
@@ -145,12 +143,13 @@ namespace BullseyeCursors
 
         private void HandleRetry()
         {
-            xTimer.Stop();
-            yTimer.Stop();
+            xCursor.StopTimer();
+            yCursor.StopTimer();
+            timer.Stop();
             ResetValuesAndLabelsForPointsAndAttempts();
             DrawNewImages();
             spaceKeyPressedCounter = 0;
-            xTimer.Start();
+            xCursor.StartTimer();
         }
         
         private void ResetValuesAndLabelsForPointsAndAttempts()
@@ -164,7 +163,7 @@ namespace BullseyeCursors
         /// </summary>
         private void DrawHoleInTarget()
         {
-            targetPictureBox.Image = target.DrawHoleAt(xCoordinate, yCoordinate);
+            targetPictureBox.Image = target.DrawHoleAt(xHitCoordinate, yHitCoordinate);
         }
 
         /// <summary>
@@ -210,14 +209,8 @@ namespace BullseyeCursors
             {
                 spaceKeyPressedCounter = 0;
                 DrawNewCursors();
-                xTimer.Start();
+                xCursor.StartTimer();
             }
-        }
-
-        private void InitializeTimers()
-        {
-            xTimer = new TimerWrapper(xCursorTimer);
-            yTimer = new TimerWrapper(yCursorTimer);
         }
 
         private void InitializeInstructionsLabel()

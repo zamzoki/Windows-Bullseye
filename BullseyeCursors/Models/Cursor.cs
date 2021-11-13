@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace BullseyeCursors.Models
 {
@@ -12,8 +13,10 @@ namespace BullseyeCursors.Models
         private readonly int height;
         private readonly bool isHorizontal;
         private readonly Graphics cursorGraphics;
+        private readonly PictureBox pictureBox;
+        private readonly Timer timer;
 
-        public Cursor(int widthArg, int heightArg)
+        public Cursor(int widthArg, int heightArg, PictureBox pictureBoxArg, Timer timerArg)
         {
             EnsureDimensionsAreValid(widthArg, heightArg);
             
@@ -22,6 +25,8 @@ namespace BullseyeCursors.Models
             this.isHorizontal = widthArg >= heightArg;
             this.Bitmap = new Bitmap(widthArg, heightArg);
             this.cursorGraphics = Graphics.FromImage(Bitmap);
+            this.pictureBox = pictureBoxArg;
+            this.timer = timerArg;
         }
         
         private int Length => this.isHorizontal ? this.width : this.height;
@@ -39,17 +44,30 @@ namespace BullseyeCursors.Models
             return this.Bitmap;
         }
 
-        public Bitmap DrawOnTickAndUpdateCoordinateValue()
+        public void DrawOnTickAndUpdateCoordinateValue()
         {
             this.DrawElements();
             this.UpdateCoordinateOnTick();
-            return this.Bitmap;
+            this.UpdateImage();
         }
 
         public void ResetCoordinate()
         {
             this.Coordinate = 0;
             this.PreviousCoordinate = -1;
+        }
+
+        public void StartTimer()
+        {
+            this.timer.Interval = 1;
+            this.timer.Enabled = true;
+            this.timer.Start();
+        }
+
+        public void StopTimer()
+        {
+            this.timer.Stop();
+            this.timer.Enabled = false;
         }
 
         private void DrawElements()
@@ -102,7 +120,6 @@ namespace BullseyeCursors.Models
             {
                 this.Coordinate -= TickStep;
             }
-
         }
 
         private bool IsAtStart() => this.Coordinate == 0;
@@ -128,5 +145,7 @@ namespace BullseyeCursors.Models
                 throw new ArgumentException($"\"{nameOfDimension}\" must be an integer greater than 0.");
             }
         }
+
+        private void UpdateImage() => this.pictureBox.Image = this.Bitmap;
     }
 }
