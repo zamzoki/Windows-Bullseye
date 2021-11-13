@@ -39,7 +39,7 @@ namespace BullseyeCursors
             target = new Target(targetPictureBox);
             xCursor = new Cursor(400, 10, xCursorPictureBox, xCursorTimer);
             yCursor = new Cursor(10, 400, yCursorPictureBox, yCursorTimer);
-            attemptsManager = new AttemptsManager(5, attemptsLabel);
+            attemptsManager = new AttemptsManager(attemptsLabel);
             pointsManager = new PointsManager(pointsLabel);
             
             InitializeInstructionsLabel();
@@ -93,33 +93,14 @@ namespace BullseyeCursors
         private void HandleFirstSpaceBar()
         {
             xCursor.StopTimer();
-                
-            // TODO investigate these adjustments
-            if (xCursor.Coordinate - xCursor.PreviousCoordinate >= 0)
-            {
-                xHitCoordinate = xCursor.Coordinate - 7;
-            }
-            else if (xCursor.Coordinate - xCursor.PreviousCoordinate < 0)
-            {
-                xHitCoordinate = xCursor.Coordinate + 14;
-            }
-
+            xHitCoordinate = xCursor.PreviousCoordinate;
             yCursor.StartTimer();
         }
 
         private void HandleSecondSpaceBar()
         {
             yCursor.StopTimer();
-            
-            // TODO investigate these adjustments
-            if (yCursor.Coordinate - yCursor.PreviousCoordinate >= 0)
-            {
-                yHitCoordinate = yCursor.Coordinate - 7;
-            }
-            else if (yCursor.Coordinate - yCursor.PreviousCoordinate < 0)
-            {
-                yHitCoordinate = yCursor.Coordinate + 14;
-            }
+            yHitCoordinate = yCursor.PreviousCoordinate;
 
             timer.Enabled = true;
             timer.Start();

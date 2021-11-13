@@ -5,13 +5,12 @@ namespace BullseyeCursors.Models
 {
     public class AttemptsManager
     {
-        private readonly int initialNoOfAttempts;
+        private const int InitialNoOfAttempts = 5;
         private Label attemptsLabel;
 
-        public AttemptsManager(int initialNoOfAttemptsArg, Label attemptsLabelArg)
+        public AttemptsManager(Label attemptsLabelArg)
         {
-            this.initialNoOfAttempts = initialNoOfAttemptsArg;
-            this.RemainingNoOfAttempts = initialNoOfAttemptsArg;
+            this.RemainingNoOfAttempts = InitialNoOfAttempts;
             InitializeLabel(attemptsLabelArg);
         }
 
@@ -25,7 +24,7 @@ namespace BullseyeCursors.Models
 
         public void Reset()
         {
-            this.RemainingNoOfAttempts = this.initialNoOfAttempts;
+            this.RemainingNoOfAttempts = InitialNoOfAttempts;
             this.UpdateLabelText();
         }
 

@@ -8,6 +8,7 @@ namespace BullseyeCursors.Models
     {
         private const int Width = 400;
         private const int Height = 400;
+        private const int HoleDiameter = 10;
         private const int GreenAreaDiameter = 20;
         private const int YellowAreaDiameter = 100;
         private const int RedAreaDiameter = 200;
@@ -36,7 +37,7 @@ namespace BullseyeCursors.Models
 
         public void DrawHoleAt(int x, int y)
         {
-            this.graphics.FillEllipse(new SolidBrush(Color.White), x - 4, y - 4, 8, 8);
+            this.graphics.FillEllipse(new SolidBrush(Color.White), x, y, HoleDiameter, HoleDiameter);
             this.UpdateImage();
         }
 
