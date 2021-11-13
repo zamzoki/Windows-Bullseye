@@ -87,17 +87,18 @@ namespace BullseyeCursors.Models
 
         private void UpdateCoordinateOnTick()
         {
-            if (this.Coordinate - this.PreviousCoordinate == 0)
+            var delta = this.Coordinate - this.PreviousCoordinate; 
+            if (delta == 0)
             {
                 throw new Exception($"Displacement cannot be zero.");
             }
             
             this.PreviousCoordinate = this.Coordinate;
-            if (this.IsAtStart() || this.IsBetweenStartAndEnd() && this.IsMovingToTheRight())
+            if (this.IsAtStart() || this.IsBetweenStartAndEnd() && this.IsMovingToTheRight(delta))
             {
                 this.Coordinate += TickStep;
             }
-            else if (this.IsAtEnd() || this.IsBetweenStartAndEnd() && this.IsMovingToTheLeft())
+            else if (this.IsAtEnd() || this.IsBetweenStartAndEnd() && this.IsMovingToTheLeft(delta))
             {
                 this.Coordinate -= TickStep;
             }
@@ -110,9 +111,9 @@ namespace BullseyeCursors.Models
 
         private bool IsBetweenStartAndEnd() => this.Coordinate > 0 && this.Coordinate < this.Length - TickStep;
 
-        private bool IsMovingToTheRight() => this.Coordinate - this.PreviousCoordinate > 0;
+        private bool IsMovingToTheRight(int deltaArg) => deltaArg > 0;
 
-        private bool IsMovingToTheLeft() => this.Coordinate - this.PreviousCoordinate < 0;
+        private bool IsMovingToTheLeft(int deltaArg) => deltaArg < 0;
 
         private static void EnsureDimensionsAreValid(int widthArg, int heightArg)
         {
