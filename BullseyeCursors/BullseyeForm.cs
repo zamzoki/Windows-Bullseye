@@ -31,14 +31,7 @@ namespace BullseyeCursors
         {
             InitializeComponent();
         }
-
-        /// <summary>
-        /// This method sets up the UI and visual elements of the application.
-        /// Whenever the form is loaded, all the visual elements will be displayed.
-        /// Also, the cursor on x is moving when the application is launched.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        
         private void BullseyeForm_Load(object sender, EventArgs e)
         {
             target = new Target(targetPictureBox);
@@ -125,13 +118,7 @@ namespace BullseyeCursors
 
             StartDynamicDisplayTimer();
         }
-
-        /// <summary>
-        /// Makes label display dynamic.
-        /// Resets cursors.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        
         private void DynamicDisplayTimer_Tick(object sender, EventArgs e)
         {
             StopDynamicDisplayTimer();
