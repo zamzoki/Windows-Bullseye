@@ -29,7 +29,6 @@ namespace BullseyeCursors
         private bool yellowFlag;
         private bool redFlag;
         private bool blueFlag;
-        private bool blackFlag;
 
         private int xCoordinate;
         private int yCoordinate;
@@ -44,7 +43,6 @@ namespace BullseyeCursors
         /// <param name="e"></param>
         private void Form1_Load(object sender, EventArgs e)
         {
-            // TODO: create Points Manager
             // TODO: move TimerWrapper inside Cursor
 
             target = new Target();
