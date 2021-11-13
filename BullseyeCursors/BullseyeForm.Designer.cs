@@ -130,8 +130,8 @@
             this.KeyPreview = true;
             this.Name = "BullseyeForm";
             this.Text = "Bullseye";
-            this.Load += new System.EventHandler(this.Form1_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
+            this.Load += new System.EventHandler(this.BullseyeForm_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.BullseyeForm_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.targetPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xCursorPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.yCursorPictureBox)).EndInit();

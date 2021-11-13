@@ -39,7 +39,7 @@ namespace BullseyeCursors
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Form1_Load(object sender, EventArgs e)
+        private void BullseyeForm_Load(object sender, EventArgs e)
         {
             target = new Target(targetPictureBox);
             xCursor = new Cursor(400, 10, xCursorPictureBox, xCursorTimer);
@@ -62,7 +62,7 @@ namespace BullseyeCursors
             yCursor.UpdateCoordinateAndDraw();
         }
 
-        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        private void BullseyeForm_KeyDown(object sender, KeyEventArgs e)
         {
             switch (e.KeyValue)
             {
