@@ -113,13 +113,17 @@ namespace BullseyeCursors
             // TODO investigate these adjustments
             yCursor.StopTimer();
             if (yCursor.Coordinate - yCursor.PreviousCoordinate >= 0)
+            {
                 yHitCoordinate = yCursor.Coordinate - 7;
+            }
             else if (yCursor.Coordinate - yCursor.PreviousCoordinate < 0)
+            {
                 yHitCoordinate = yCursor.Coordinate + 14;
+            }
 
             timer.Enabled = true;
             timer.Start();
-            timer.Interval = (750);
+            timer.Interval = 750;
 
             var pointsToAdd = 0;
             if (Target.IsGreenArea(xHitCoordinate, yHitCoordinate))
