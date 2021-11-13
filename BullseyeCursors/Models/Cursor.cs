@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Runtime.CompilerServices;
 
 namespace BullseyeCursors.Models
 {
@@ -12,11 +11,7 @@ namespace BullseyeCursors.Models
         private readonly int width;
         private readonly int height;
         private readonly bool isHorizontal;
-        private readonly Bitmap bitmap;
         private readonly Graphics cursorGraphics;
-
-        private int coordinate;
-        private int previousCoordinate = -10; // TODO check if initial value is needed;
 
         public Cursor(int widthArg, int heightArg)
         {
@@ -25,36 +20,36 @@ namespace BullseyeCursors.Models
             this.width = widthArg;
             this.height = heightArg;
             this.isHorizontal = widthArg >= heightArg;
-            this.bitmap = new Bitmap(widthArg, heightArg);
-            this.cursorGraphics = Graphics.FromImage(bitmap);
+            this.Bitmap = new Bitmap(widthArg, heightArg);
+            this.cursorGraphics = Graphics.FromImage(Bitmap);
         }
         
         private int Length => this.isHorizontal ? this.width : this.height;
 
-        public Bitmap Bitmap => this.bitmap;
+        public Bitmap Bitmap { get; }
 
-        public int Coordinate => this.coordinate;
+        public int Coordinate { get; private set; }
 
-        public int PreviousCoordinate => this.previousCoordinate;
+        public int PreviousCoordinate { get; private set; } = -10;
 
         public Bitmap DrawNew()
         {
             this.ResetCoordinate();
             this.DrawElements();
-            return this.bitmap;
+            return this.Bitmap;
         }
 
         public Bitmap DrawOnTickAndUpdateCoordinateValue()
         {
             this.DrawElements();
             this.UpdateCoordinateOnTick();
-            return this.bitmap;
+            return this.Bitmap;
         }
 
         public void ResetCoordinate()
         {
-            this.coordinate = 0;
-            this.previousCoordinate = -1;
+            this.Coordinate = 0;
+            this.PreviousCoordinate = -1;
         }
 
         private void DrawElements()
@@ -82,42 +77,42 @@ namespace BullseyeCursors.Models
 
         private void DrawCursorForHorizontalTrack()
         {
-            this.cursorGraphics.FillRectangle(new SolidBrush(Color.LightSeaGreen), this.coordinate, 0, CursorThickness, this.height);
+            this.cursorGraphics.FillRectangle(new SolidBrush(Color.LightSeaGreen), this.Coordinate, 0, CursorThickness, this.height);
         }
 
         private void DrawCursorForVerticalTrack()
         {
-            this.cursorGraphics.FillRectangle(new SolidBrush(Color.LightSeaGreen), 0, this.coordinate, this.width, CursorThickness);
+            this.cursorGraphics.FillRectangle(new SolidBrush(Color.LightSeaGreen), 0, this.Coordinate, this.width, CursorThickness);
         }
 
         private void UpdateCoordinateOnTick()
         {
-            if (this.coordinate - this.previousCoordinate == 0)
+            if (this.Coordinate - this.PreviousCoordinate == 0)
             {
                 throw new Exception($"Displacement cannot be zero.");
             }
             
-            this.previousCoordinate = this.coordinate;
+            this.PreviousCoordinate = this.Coordinate;
             if (this.IsAtStart() || this.IsBetweenStartAndEnd() && this.IsMovingToTheRight())
             {
-                this.coordinate += TickStep;
+                this.Coordinate += TickStep;
             }
             else if (this.IsAtEnd() || this.IsBetweenStartAndEnd() && this.IsMovingToTheLeft())
             {
-                this.coordinate -= TickStep;
+                this.Coordinate -= TickStep;
             }
 
         }
 
-        private bool IsAtStart() => this.coordinate == 0;
+        private bool IsAtStart() => this.Coordinate == 0;
 
-        private bool IsAtEnd() => this.coordinate == this.Length - TickStep;
+        private bool IsAtEnd() => this.Coordinate == this.Length - TickStep;
 
-        private bool IsBetweenStartAndEnd() => this.coordinate > 0 && this.coordinate < this.Length - TickStep;
+        private bool IsBetweenStartAndEnd() => this.Coordinate > 0 && this.Coordinate < this.Length - TickStep;
 
-        private bool IsMovingToTheRight() => this.coordinate - this.previousCoordinate > 0;
+        private bool IsMovingToTheRight() => this.Coordinate - this.PreviousCoordinate > 0;
 
-        private bool IsMovingToTheLeft() => this.coordinate - this.previousCoordinate < 0;
+        private bool IsMovingToTheLeft() => this.Coordinate - this.PreviousCoordinate < 0;
 
         private static void EnsureDimensionsAreValid(int widthArg, int heightArg)
         {
