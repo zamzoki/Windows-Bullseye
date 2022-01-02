@@ -171,7 +171,6 @@ namespace BullseyeCursors
             dynamicDisplayTimer.Enabled = true;
             dynamicDisplayTimer.Interval = 750;
             dynamicDisplayTimer.Start();
-            
         }
 
         private void StopDynamicDisplayTimer()
