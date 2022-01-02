@@ -34,6 +34,8 @@ namespace BullseyeCursors
         
         private void BullseyeForm_Load(object sender, EventArgs e)
         {
+            // TODO add XML documentation to public methods, at least
+            
             target = new Target(targetPictureBox);
             xCursor = new Cursor(400, 10, xCursorPictureBox, xCursorTimer);
             yCursor = new Cursor(10, 400, yCursorPictureBox, yCursorTimer);
