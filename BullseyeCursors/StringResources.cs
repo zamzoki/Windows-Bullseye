@@ -8,7 +8,7 @@
 
         private const string ExitInstruction = "Press [Esc] to exit.";
 
-        private const string AttemptsLabel = "Attempts: ";
+        private const string AttemptsLabel = "Attempts";
 
         private const string PointsLabel = "Points";
 
